@@ -1,10 +1,73 @@
 body {
-    color: black;
-    background-color: slategray;
+    background: slategrey;
 }
 
 h1 {
-    color: white;
-    font-size: 35;
+    color: turquoise;
     text-align: center;
+    font-size: 50px;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+    color: turquoise;
+    text-align: center;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h3 {
+    color: deeppink;
+    text-align: center;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#section1 {
+
+}
+
+    #map {
+        
+    }
+
+        .kantone{
+            fill: #CB904D;
+            stroke: #333333;
+            stroke-width: 1;
+        }
+
+        .lakes{
+            fill: #C5E4F7;
+            stroke: #333333;
+            stroke-width: 1;
+
+        }
+
+    #sidebar {
+        border-left-style: solid;
+        border-left-width: thin;
+    }
+
+
+#section2 {
+    
+}
+
+    #metadata {
+        
+    }
+
+    #authors {
+        
+    }
+
+#section3 {
+    background-color: khaki;
+    
 }

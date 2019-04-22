@@ -1,25 +1,26 @@
-var canvas = d3.select("body")
+var canvas = d3.select("#map")
                 .append("svg")
-                .attr("width", 1000)
-                .attr("height", 1000);
+                .attr("preserveAspectRatio", "xMinYMin meet")
+                .attr("viewBox", "0 0 1000 600");
 
 var gBackground = canvas.append("g");
+var gLakes = canvas.append("g");
 var gHauptorte = canvas.append("g");
 var gRiver = canvas.append("g");
 var gWeather = canvas.append("g");
 
 var projection = d3.geoMercator()
         .scale(10000)
-        .translate([-1000,9600]);
+        .translate([-940,9555]);
                 
 var path = d3.geo.path().projection(projection);
-            
-var kantone = "data/kantone.geojson";
-            
+
+// Kantone
+var kantone = "data/kantone.geojson";        
 d3.json(kantone, function(data){
     console.log(data);
                 
-    var areas = gBackground.selectAll("path")
+    var areas = gBackground.selectAll(".area")
         .data(data.features)
         .enter().append("path")
         .attr("d", path)
@@ -30,6 +31,23 @@ d3.json(kantone, function(data){
             
 });
 
+// Seen
+var lakes = "data/swissLakes.json";        
+d3.json(lakes, function(lk){
+    console.log(lk);
+                
+    var areas = gLakes.selectAll(".lakes")
+        .data(lk.features)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", "lakes")
+        .attr("fill", "skyblue")
+        .attr("stroke", "black")
+        .attr("stroke-width", 0.1);
+            
+});
+
+// Hauptorte
 var hauptorte = "data/hauptorte.geojson";
 d3.json(hauptorte, function(orte){
         console.log(orte);
@@ -46,6 +64,7 @@ d3.json(hauptorte, function(orte){
         
 });
 
+// Flussdaten
 var riverdata = "data/flusstemperaturen_converted.geojson";
 d3.json(riverdata, function(rivertemps){
         console.log(rivertemps);        
@@ -64,6 +83,7 @@ d3.json(riverdata, function(rivertemps){
         
 });
 
+// Wetterstationen
 var weatherdata = "data/weatherstation.geojson";
 d3.json(weatherdata, function(weather){
         console.log(weather);
@@ -81,6 +101,9 @@ d3.json(weatherdata, function(weather){
             .on("mouseleave", mouseLeaveEvent);
         
 });
+
+
+// Funktionen für Interaktionen
 
 function mouseClickEvent(d) {
     var color = d3.select(this).attr("stroke");
