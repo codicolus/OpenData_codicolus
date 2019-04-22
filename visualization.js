@@ -4,6 +4,7 @@ var canvas = d3.select("body")
                 .attr("height", 1000);
 
 var gBackground = canvas.append("g");
+var gHauptorte = canvas.append("g");
 var gRiver = canvas.append("g");
 var gWeather = canvas.append("g");
 
@@ -23,8 +24,26 @@ d3.json(kantone, function(data){
         .enter().append("path")
         .attr("d", path)
         .attr("class", "area")
-        .attr("fill", "white");
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("stroke-width", 0.2);
             
+});
+
+var hauptorte = "data/hauptorte.geojson";
+d3.json(hauptorte, function(orte){
+        console.log(orte);
+        
+        var ortePoints = gHauptorte.selectAll(".orte")
+            .data(orte.features)
+            .enter()
+            .append("path")
+            .attr("d", path.pointRadius(3))
+            .attr("class", "orte")
+            .style("fill", "black")
+            .attr("stroke", "black")
+            .attr("stroke-width", 2)
+        
 });
 
 var riverdata = "data/flusstemperaturen_converted.geojson";
