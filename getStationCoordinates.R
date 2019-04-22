@@ -1,36 +1,23 @@
-# This short script is for scraping the coordinate-values + height values out of the MeteoSwiss-Metadata files
-# used here: Weather Stations 10min
-# Can be used for precipitation-station extension too
+#define the length of each fixed-width column
+lengths <- c(
+  str_length("stn                                       "),
+  str_length("Name                         "),
+  str_length("Länge/Breite                              "),
+  str_length("KM-Koordinaten                            "),
+  str_length("Höhe")
+)
 
-# Specifications
-filename <- "./data/station_data.txt.txt"
-outfilename <- "./data/coord_wetterstationen"
+# specify the colnames
+col_names <- c("Station", "Name", "Länge/Breite", "Koordinaten", "Höhe")
 
-# Read in Text-File
-data <- read.csv(file=filename, sep = "", header = F, skip = 2, na.strings = "")
+# read in the data
+data <- read_fwf("data/station_data.txt.txt", col_positions = fwf_widths(lengths, col_names = col_names),
+                 trim_ws = T, skip = 2, locale = locale(encoding = "ISO-8859-1"))
 
-# Convert from Factors to Chars
-data_char <- cbind(as.character(data[,1]),as.character(data[,2]),as.character(data[,3]),as.character(data[,4]),
-                   as.character(data[,5]))
+rm(col_names, lengths)
 
-# Convert Table to single-row vector
-data_rows <- c()
-for (i in 1:dim(data_char)[1]){
-  data_rows <- c(data_rows, data_char[i,])
-}
-
-# Using Regex for determining indices of coordinates and height values
-pattern <- "[0-9]{3}|[0-9]{4}|[0-9]{6}"
-
-indizes <- grep(pattern, data_rows)
-
-# Get only needed values and reformat it 
-correct <- data_rows[indizes]
-selected <- matrix(correct, nrow = 2)
-selected <- t(selected)
-
-# reformat coordinates
-coords <- selected[,1]
+# transform coordinates to lon / lat in separate columns
+coords <- as.vector(as.matrix((as.data.frame(select(data, Koordinaten)))))
 splitted <- strsplit(coords, "/")
 
 lon <- c()
@@ -41,17 +28,16 @@ for (i in 1:length(splitted)){
   lat <- c(lat, splitted[[i]][2])
 }
 
-# convert all columns to numeric values
-lon <- as.numeric(lon)
-lat <- as.numeric(lat)
-height <- as.numeric(selected[,2])
+rm(splitted, coords, i)
 
-# Final table
-output <- cbind(lon, lat, height)
-write.csv(output, file = outfilename, row.names = F)
+# select needed variables
+new <- select(data, Station, Name, Höhe)
+new <- mutate(new,
+              Longitude = lon,
+              Latitude = lat)
 
-# Clear Workspace
-rm(list=ls())
+# Writing CSV
+write_csv(new, "data/meteo.csv")
 
 
 
