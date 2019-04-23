@@ -66,7 +66,7 @@ d3.json(hauptorte, function(orte){
 });
 
 // Flussdaten
-var riverdata = "data/flusstemperaturen_converted.geojson";
+var riverdata = "data/flussdaten.geojson";
 d3.json(riverdata, function(rivertemps){
         console.log(rivertemps);        
         
@@ -126,7 +126,7 @@ d3.json(weatherdata, function(weather){
         var mousecoords = d3.mouse(d.node().parentNode);
       Tooltip
         .html(d.name + "<br>" + "long: " + d.long + "<br>" + "lat: " + d.lat)
-        .attr("transform", "translate(" + (mousecoords[0]-10) + "," + (mousecoords[1]-10) + ")");
+        //.attr("transform", "translate(" + (mousecoords[0]-10) + "," + (mousecoords[1]-10) + ")");
     }
     var mouseleave = function(d) {
       Tooltip.style("opacity", 0)
