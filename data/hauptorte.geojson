@@ -3,7 +3,7 @@
 "name": "hauptorte",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "ID0": "261", "ID1": "STZH_Z�rich", "ID2": "Point1", "ID3": "Point1" }, "geometry": { "type": "Point", "coordinates": [ 8.538847216479144, 47.36950057517214 ] } },
+{ "type": "Feature", "properties": { "ID0": "261", "ID1": "STZH_Zürich", "ID2": "Point1", "ID3": "Point1" }, "geometry": { "type": "Point", "coordinates": [ 8.538847216479144, 47.36950057517214 ] } },
 { "type": "Feature", "properties": { "ID0": "351", "ID1": "STBE_Bern", "ID2": "Point2", "ID3": "Point2" }, "geometry": { "type": "Point", "coordinates": [ 7.439946014677686, 46.948384223137623 ] } },
 { "type": "Feature", "properties": { "ID0": "1061", "ID1": "STLU_Luzern", "ID2": "Point3", "ID3": "Point3" }, "geometry": { "type": "Point", "coordinates": [ 8.305224793037548, 47.055245195578181 ] } },
 { "type": "Feature", "properties": { "ID0": "1201", "ID1": "STUR_Altdorf (UR)", "ID2": "Point4", "ID3": "Point4" }, "geometry": { "type": "Point", "coordinates": [ 8.64300223529694, 46.880884267823163 ] } },
@@ -26,8 +26,8 @@
 { "type": "Feature", "properties": { "ID0": "5002", "ID1": "STTI_Bellinzona", "ID2": "Point21", "ID3": "Point21" }, "geometry": { "type": "Point", "coordinates": [ 9.024186382430125, 46.191535278757939 ] } },
 { "type": "Feature", "properties": { "ID0": "5586", "ID1": "STVD_Lausanne", "ID2": "Point22", "ID3": "Point22" }, "geometry": { "type": "Point", "coordinates": [ 6.633279260162179, 46.520038527961411 ] } },
 { "type": "Feature", "properties": { "ID0": "6266", "ID1": "STVS_Sion", "ID2": "Point23", "ID3": "Point23" }, "geometry": { "type": "Point", "coordinates": [ 7.360869419808862, 46.23231470276442 ] } },
-{ "type": "Feature", "properties": { "ID0": "6458", "ID1": "STNE_Neuch�tel", "ID2": "Point24", "ID3": "Point24" }, "geometry": { "type": "Point", "coordinates": [ 6.929066211678806, 46.993841805759182 ] } },
-{ "type": "Feature", "properties": { "ID0": "6621", "ID1": "STGE_Gen�ve", "ID2": "Point25", "ID3": "Point25" }, "geometry": { "type": "Point", "coordinates": [ 6.142975618804146, 46.205107555876729 ] } },
-{ "type": "Feature", "properties": { "ID0": "6711", "ID1": "STJU_Del�mont", "ID2": "Point26", "ID3": "Point26" }, "geometry": { "type": "Point", "coordinates": [ 7.345959590337052, 47.363904685591137 ] } }
+{ "type": "Feature", "properties": { "ID0": "6458", "ID1": "STNE_Neuchâtel", "ID2": "Point24", "ID3": "Point24" }, "geometry": { "type": "Point", "coordinates": [ 6.929066211678806, 46.993841805759182 ] } },
+{ "type": "Feature", "properties": { "ID0": "6621", "ID1": "STGE_Genève", "ID2": "Point25", "ID3": "Point25" }, "geometry": { "type": "Point", "coordinates": [ 6.142975618804146, 46.205107555876729 ] } },
+{ "type": "Feature", "properties": { "ID0": "6711", "ID1": "STJU_Delémont", "ID2": "Point26", "ID3": "Point26" }, "geometry": { "type": "Point", "coordinates": [ 7.345959590337052, 47.363904685591137 ] } }
 ]
 }

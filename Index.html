@@ -34,7 +34,6 @@
             </div>
             <div class="row">
                 <div id="map" class="col-sm-12 col-md-12 col-lg-9">
-                    <script src="visualization.js"></script>
                 </div>
                 <div id="sidebar" class="col-sm-12 col-md-12 col-lg-3">
                     <h2>Visualisierung</h2>
@@ -54,9 +53,9 @@
                             <label for="checkbox" class="col-lg-12">Aktivieren/Deaktivieren von Layern</label>
                             <!-- Button -->
                             <div>
-                              <input type="checkbox" id="checkbox" value="orte" checked><label>Hauptorte</label>
-                              <input type="checkbox" id="checkbox" value="weather" checked><label>Wetterstationen</label>
-                              <input type="checkbox" id="checkbox" value="rivers" checked><label>Flusstemperaturen</label>
+                              <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label>
+                              <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label>
+                              <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
                             </div>
                         </div>
                     </form>
@@ -81,5 +80,6 @@
                 </div>
             </div>
         </div>
+        <script src="visualization.js"></script>
     </body>
 </html>

@@ -5,9 +5,17 @@ var canvas = d3.select("#map")
 
 var gBackground = canvas.append("g");
 var gLakes = canvas.append("g");
-var gHauptorte = canvas.append("g");
+var gHauptorte = canvas.append("g").attr("class", "hauptorte");
 var gRiver = canvas.append("g");
 var gWeather = canvas.append("g");
+
+// File-Paths
+var kantone = "data/kantone.geojson";
+var lakes = "data/swissLakes.json";
+var hauptorte = "data/hauptorte.geojson";
+var riverdata = "data/flussdaten.geojson";
+var weatherdata = "data/weatherstation.geojson";
+
 
 var projection = d3.geoMercator()
         .scale(10000)
@@ -16,12 +24,51 @@ var projection = d3.geoMercator()
 var path = d3.geo.path().projection(projection);
 
 
-// Kantone
-var kantone = "data/kantone.geojson";        
+// Tooltip
+// create a tooltip
+var Tooltip = d3.select("#map")
+  .append("div")
+  .attr("class", "tooltip")
+  .attr("position", "fixed")
+  .style("opacity", 0)
+  .style("background-color", "white")
+  .style("border", "solid")
+  .style("border-width", "2px")
+  .style("border-radius", "5px")
+  .style("padding", "5px")
+
+// Three function that change the tooltip when user hover / move / leave a cell
+var mouseover = function(d) {
+  Tooltip.style("border-color", d3.select(this).style("fill"))
+        .style("left", (d3.mouse(this)[0]) + "px")
+        .style("top", (d3.mouse(this)[1]) + "px");
+        
+        // if mouse hovers over wetter, read in metadata from weather
+        if (d3.select(this).attr("class") == "weather"){
+            Tooltip.html("<strong>"+d.properties.Name+"</strong>" + " (" + d.properties.Station + ")" + "<br>" + "Höhe (m.ü.M): " + d.properties.Höhe + "<br>" + "Temperatur (°C): " + d.properties["Temperatur (°C)"] + "<br>" + "Luftfeuchtigkeit (%): " + d.properties["Luftfeuchte (%)"] + "<br>" + "Niederschlag (mm): " + d.properties["Niederschlag (mm)"])
+            
+        // if mouse hovers over flussMess, read in metadata from flussMess    
+        } else if(d3.select(this).attr("class") == "rivers") {
+            Tooltip.html("<strong>" + d.properties.name.substr(0, d.properties.name.length - 7) + "</strong>" + "<br>" + "Temperaturklasse: " + d.properties["temp-class"] + "<br>")
+            
+        } else {
+            Tooltip.html("<strong>" + "Kantonshauptstadt: " + "</strong>" +d.properties.ID1.substr(5))
+        }
+    
+   // d3.select(this).attr("cursor", "pointer");
+}
+var mousemove = function(d) {
+    Tooltip.style("opacity", 1)
+}
+var mouseleave = function(d) {
+  Tooltip.style("opacity", 0)
+}
+
+// Kantone        
 d3.json(kantone, function(data){
     console.log(data);
                 
-    var areas = gBackground.selectAll(".area")
+    areas = gBackground.selectAll(".area")
         .data(data.features)
         .enter().append("path")
         .attr("d", path)
@@ -29,15 +76,16 @@ d3.json(kantone, function(data){
         .attr("fill", "white")
         .attr("stroke", "black")
         .attr("stroke-width", 0.2);
-            
+    
+    //console.log(areas.attr("stroke"))
+        
 });
 
-// Seen
-var lakes = "data/swissLakes.json";        
+// Seen        
 d3.json(lakes, function(lk){
     console.log(lk);
                 
-    var areas = gLakes.selectAll(".lakes")
+    var seen = gLakes.selectAll(".lakes")
         .data(lk.features)
         .enter().append("path")
         .attr("d", path)
@@ -49,7 +97,6 @@ d3.json(lakes, function(lk){
 });
 
 // Hauptorte
-var hauptorte = "data/hauptorte.geojson";
 d3.json(hauptorte, function(orte){
         console.log(orte);
         
@@ -57,16 +104,28 @@ d3.json(hauptorte, function(orte){
             .data(orte.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(3))
+            .attr("d", path.pointRadius(5))
             .attr("class", "orte")
             .style("fill", "black")
-            .attr("stroke", "black")
-            .attr("stroke-width", 2)
-        
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave);
+    
+    //console.log(ortePoints.style("fill"))
+    
+    // Checkbox
+    d3.select("#places").on("change", function(d){
+        checked =  d3.select("#places").property("checked");
+        if (checked) {
+            ortePoints.attr("display", "block")
+            
+        } else {
+            ortePoints.attr("display", "none")
+        }
+    })    
 });
 
 // Flussdaten
-var riverdata = "data/flussdaten.geojson";
 d3.json(riverdata, function(rivertemps){
         console.log(rivertemps);        
         
@@ -74,20 +133,29 @@ d3.json(riverdata, function(rivertemps){
             .data(rivertemps.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(3))
+            .attr("d", path.pointRadius(5))
             .attr("class", "rivers")
-            .style("fill", "white")
-            .attr("stroke", "blue")
-            .attr("stroke-width", 2)
-            .on("mouseover", mouseClickEvent)
-            .on("mouseleave", mouseLeaveEvent);
+            .style("fill", "blue")
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave);
+    
+        // Checkbox
+        d3.select("#river").on("change", function(d){
+            checked =  d3.select("#river").property("checked");
+            if (checked) {
+                riverPoints.attr("display", "block")
+
+            } else {
+                riverPoints.attr("display", "none")
+            }
+        })
     
     console.log(rivertemps.features[1].geometry.coordinates[1])
         
 });
 
 // Wetterstationen
-var weatherdata = "data/weatherstation.geojson";
 d3.json(weatherdata, function(weather){
         console.log(weather);
         
@@ -95,44 +163,26 @@ d3.json(weatherdata, function(weather){
             .data(weather.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(3))
+            .attr("d", path.pointRadius(5))
             .attr("class", "weather")
-            .style("fill", "white")
-            .attr("stroke", "red")
-            .attr("stroke-width", 2)
-            .on("mouseover", mouseClickEvent)
-            .on("mouseleave", mouseLeaveEvent);
+            .style("fill", "red")
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave);
+    
+        // Checkbox
+        d3.select("#meteo").on("change", function(d){
+            checked =  d3.select("#meteo").property("checked");
+            if (checked) {
+                weatherPoints.attr("display", "block")
+
+            } else {
+                weatherPoints.attr("display", "none")
+            }
+        })
         
 });
 
-
-//
-// create a tooltip
-    var Tooltip = d3.select("#map")
-      .append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 1)
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "2px")
-      .style("border-radius", "5px")
-      .style("padding", "5px")
-    
-// Three function that change the tooltip when user hover / move / leave a cell
-    var mouseover = function(d) {
-      Tooltip.style("opacity", 1)
-    }
-    var mousemove = function(d) {
-        var mousecoords = d3.mouse(d.node().parentNode);
-      Tooltip
-        .html(d.name + "<br>" + "long: " + d.long + "<br>" + "lat: " + d.lat)
-        //.attr("transform", "translate(" + (mousecoords[0]-10) + "," + (mousecoords[1]-10) + ")");
-    }
-    var mouseleave = function(d) {
-      Tooltip.style("opacity", 0)
-    }
-
-//
 
 // Funktionen für Interaktionen
 
@@ -147,36 +197,3 @@ function mouseLeaveEvent() {
     d3.select(this).style("fill", "white");
 }
 
-// Event Listener and Functions for Checkboxes
-function displayLayer(){
-    //for each check box:
-    d3.select("#sidebar").select(".checkbox").each(function(d){
-        var cb = d3.select(this);
-        var grp = cb.property("value");
-        var svg = d3.select("svg");
-        console.log(grp);
-        
-        // If checked show group otherwise hide
-        if(cb.property("checked")){
-            svg.selectAll("."+grp).style("display", "block")
-        }else{
-            svg.selectAll("."+grp).style("display", "none")
-        }
-    });
-}
-
-    // Event Listener when checkbox is changed
-d3.select("#sidebar").selectAll(".checkbox").on("change", displayLayer);
-
-displayLayer();
-
-
-// BufferSlider
-    d3.select("#BufferSlider").on("change", function(d){
-        var buff = this.value
-        d3.select("#section1")
-        canvas.selectAll("g")
-            .selectAll(".orte .rivers .weather").attr(d, path.pointRadius(buff));
-        });
-
-console.log(d3.select("#section1").selectAll("input"));
