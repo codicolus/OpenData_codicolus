@@ -39,7 +39,7 @@ var Tooltip = d3.select("#map")
 
 // Three function that change the tooltip when user hover / move / leave a cell
 var mouseover = function(d) {
-  Tooltip.style("border-color", d3.select(this).style("fill"))
+  Tooltip.style("border-color", d3.select(this).attr("stroke"))
         .style("left", (d3.mouse(this)[0]) + "px")
         .style("top", (d3.mouse(this)[1]) + "px");
         
@@ -55,13 +55,20 @@ var mouseover = function(d) {
             Tooltip.html("<strong>" + "Kantonshauptstadt: " + "</strong>" +d.properties.ID1.substr(5))
         }
     
-   // d3.select(this).attr("cursor", "pointer");
+    // Fill-Interaction
+    var color = d3.select(this).attr("stroke");
+    //console.log(color);
+    d3.select(this).style("fill", color);
 }
 var mousemove = function(d) {
     Tooltip.style("opacity", 1)
 }
 var mouseleave = function(d) {
-  Tooltip.style("opacity", 0)
+    //Tooltip function
+    Tooltip.style("opacity", 0)
+    
+    // Fill-Interaction
+    d3.select(this).style("fill", "white");
 }
 
 // Kantone        
@@ -106,7 +113,9 @@ d3.json(hauptorte, function(orte){
             .append("path")
             .attr("d", path.pointRadius(5))
             .attr("class", "orte")
-            .style("fill", "black")
+            .style("fill", "white")
+            .attr("stroke", "black")
+            .attr("stroke-width", 2)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
@@ -135,7 +144,9 @@ d3.json(riverdata, function(rivertemps){
             .append("path")
             .attr("d", path.pointRadius(5))
             .attr("class", "rivers")
-            .style("fill", "blue")
+            .style("fill", "white")
+            .attr("stroke", "blue")
+            .attr("stroke-width", 2)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
@@ -165,7 +176,9 @@ d3.json(weatherdata, function(weather){
             .append("path")
             .attr("d", path.pointRadius(5))
             .attr("class", "weather")
-            .style("fill", "red")
+            .style("fill", "white")
+            .attr("stroke", "red")
+            .attr("stroke-width", 2)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
@@ -186,14 +199,4 @@ d3.json(weatherdata, function(weather){
 
 // Funktionen für Interaktionen
 
-function mouseClickEvent() {
-    var color = d3.select(this).attr("stroke");
-    //console.log(color);
-    
-    d3.select(this).style("fill", color);
-}
-
-function mouseLeaveEvent() {
-    d3.select(this).style("fill", "white");
-}
 
