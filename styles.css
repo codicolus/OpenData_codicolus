@@ -2,6 +2,10 @@ body {
     background: slategrey;
 }
 
+.card:first-of-type {
+    background: slategrey;
+}
+
 h1 {
     color: turquoise;
     text-align: center;
@@ -43,7 +47,7 @@ p {
         }
 
         .lakes{
-            fill: #C5E4F7;
+            fill: turquoise;
             stroke: #333333;
             stroke-width: 1;
 

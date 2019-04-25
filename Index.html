@@ -12,12 +12,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js">
         </script>
         <script src="http://d3js.org/queue.v1.min.js"></script>
+        <script src="https://d3js.org/d3-color.v1.min.js"></script>
+        <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://unpkg.com/d3-array@1"></script>
         
         <!-- Bootstrap & jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <!-- EMOJIIS -->
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
         
         <!-- Own stylesheet -->
         <link rel="stylesheet" href="styles.css"/>
@@ -26,7 +33,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-        <div id="section1" class="container-fluid">
+        <div id="section1" class="card">
             <div class="row">
                 <div id="sitename" class="col-sm-12 col-md-12 col-lg-9">
                     <h1>Badewätter.com - Wo badetsechs hüt?</h1>
@@ -44,13 +51,21 @@
 
                     <form>
                         <div>
-                            <label for="BufferSlider" class="col-lg-12">Bufferdistanz (Genauigkeit) festlegen</label>
-                            <input type="range" class="range-field col-lg-12 col-sm-3" min="2" max="20" step="0.5" id="BufferSlider">
+                            <h6 class="col-lg-12">Bufferdistanz (Genauigkeit) festlegen</h6>
+                            <input type="range" class="range-field col-lg-12 col-sm-3" min="2" max="6" step="2" value="2" id="accuracy">
+                            <label for="accuracy" id="lbaccur">Wert: 2</label>
                         </div>
                     </form>
                     <form>
                         <div>
-                            <label for="checkbox" class="col-lg-12">Aktivieren/Deaktivieren von Layern</label>
+                            <h6 class="col-lg-12">Ab wann gehst du baden?</h6>
+                            <input type="range" class="range-field col-lg-12 col-sm-3" min="10" max="45" step="1" value="20" id="parameter">
+                            <label for="parameter" id="lbparam">Wert: 20</label>
+                        </div>
+                    </form>
+                    <form>
+                        <div>
+                            <h6 class="col-lg-12">Aktivieren/Deaktivieren von Layern</h6>
                             <!-- Button -->
                             <div>
                               <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label>
