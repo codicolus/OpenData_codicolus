@@ -3,15 +3,19 @@
 var canvas = d3.select("#map")
                 .append("svg")
                 .attr("preserveAspectRatio", "xMinYMin meet")
-                .attr("viewBox", "0 0 1000 600");
+                .attr("viewBox", "0 0 1000 620");
 
 var gIndex = canvas.append("g");
 var gKantone = canvas.append("g");
 var gLakes = canvas.append("g");
 var gIndex2 = canvas.append("g");
-var gHauptorte = canvas.append("g").attr("class", "hauptorte");
+var gHauptorte = canvas.append("g");
 var gRiver = canvas.append("g");
 var gWeather = canvas.append("g");
+
+// Point-Settings
+var radius = 4;
+var strkwdt = 2;
 
 // File-Paths
 var kantone = "data/kantone_lines.geojson";
@@ -23,7 +27,6 @@ var badewetterIndex = "data/badeindex_vect32.geojson"
 
 // Temperatur-Index Threshold
 var threshold = 35
-
 
 // Define Projection and Path
 var projection = d3.geoMercator()
@@ -40,6 +43,7 @@ var Tooltip = d3.select("#map")
   .attr("class", "tooltip")
   .attr("position", "fixed")
   .style("opacity", 0)
+  //.attr("display", "none")
   .style("background-color", "white")
   .style("border", "solid")
   .style("border-width", "2px")
@@ -49,8 +53,12 @@ var Tooltip = d3.select("#map")
 // Three function that change the tooltip when user hover / move / leave a cell
 var mouseover = function(d) {
   Tooltip.style("border-color", d3.select(this).attr("stroke"))
-        .style("left", (d3.mouse(this)[0]) + "px")
-        .style("top", (d3.mouse(this)[1]) + "px");
+        //.attr("display", "inline")
+        .style("left", (d3.event.pageX + 10) + "px")
+        .style("top", (d3.event.pageY - 40) + "px")
+        
+      /*.style("left", (d3.mouse(this)[0]) + "px")
+        .style("top", (d3.mouse(this)[1]) + "px");*/
     
         var featureClass = d3.select(this).attr("class");
         
@@ -67,9 +75,9 @@ var mouseover = function(d) {
         } else {
             var yesNo;
             if(d.properties.DN > threshold){
-                yesNo = "JA! " + "<br>" + "&#x2714;" + "&#x1F601;" + "&#x1F44D;" ;
+                yesNo = "Ja! " + "<br>" + "&#x2714;" + "&#x1F601;" + "&#x1F44D;" ;
             }else{
-                yesNo = "NEIN! " + "<br>" + "&#x274C;" + "&#x1F612;" + "&#x1F44E;";
+                yesNo = "Nein! " + "<br>" + "&#x274C;" + "&#x1F612;" + "&#x1F44E;";
             }
             Tooltip.html("<strong>Badeindex: </strong>" + d.properties.DN +"<br>" + "Badewetter: " + yesNo)
         }
@@ -89,38 +97,85 @@ var mouseleave = function(d) {
     //Tooltip function
     Tooltip.style("opacity", 0)
     
-    // Fill-Interaction
-    d3.select(this).style("fill", "white");
+    if(d3.select(this).attr("class") != "bw_index2"){
+        // Fill-Interaction
+        d3.select(this).style("fill", "white");
+    }
+    
 }
 
 // Slider für unterschiedliche Genauigkeit
-function updateRender(filepath, value){
-    /*
-    
-    
-    NOCH ZU IMPLEMENTIEREN!
-    
-    
-    */
+function updateRender(filepath, className){
+    //Update Displayed-Index File + Hovered Index File
+    d3.json(filepath, function(newData){
+        var newFeatures = newData.features;
+        
+        //console.log(className);
+        
+        if (className == ".bw_index1"){
+            
+            // enter
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .enter().append("path")
+                .attr("class", className.substr(1))
+            
+            // update
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .transition()
+                .duration(1000)
+                .attr("d", path)
+                .attr("class", className.substr(1))
+                .attr("fill", function(d,i){
+                    var DN = newFeatures[i].properties.DN;
+                    var DN2 = 1-(DN/100)
+                    return d3.interpolateRdYlBu(DN2);
+                })
+            
+            // remove exit-selection
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .exit()
+                .remove();
+            
+                
+            
+            //console.log(gIndex.selectAll(className));
+            
+                
+        }else{
+            
+            //console.log(gIndex2.selectAll(className));
+            
+            
+        }
+        
+    })
 }
 
+// Event-Listener Slider für Genauigkeit
 d3.select("input#accuracy").on("change", function(d){
     var accuracy = this.value;
     // Update label
     document.getElementById("lbaccur").innerHTML = "Wert: " + accuracy;
-    
+
+    var classesToUpdate = [".bw_index1", ".bw_index2"]
     var filepath;
-    
-    if(accuracy == 2){
+
+    if(accuracy == 1){
         filepath = "data/badeindex_vect32.geojson";
-    } else if(accuracy == 4){
+    } else if(accuracy == 2){
         filepath = "data/badeindex_vect44.geojson";
     } else {
         filepath = "data/badeindex_vect55.geojson";
     }
     
-    updateRender(filepath, accuracy);
+    // Call Update Function
+    updateRender(filepath, classesToUpdate[0]);
+    updateRender(filepath, classesToUpdate[1])
 })
+
 
 // Slider für Temperatureingabe
 function updateIndexThreshold(temperatur){
@@ -128,11 +183,13 @@ function updateIndexThreshold(temperatur){
     threshold = index;
 }
 
+// Event-Listener Slider für Temperatureingabe
 d3.select("input#parameter").on("change", function(d){
     var temperatur = this.value;
     //Update label
-    document.getElementById("lbparam").innerHTML = "Wert: " + temperatur;
+    document.getElementById("lbparam").innerHTML = "Wert: " + temperatur + " °C";
     
+    // Call Threshold-Update Function
     updateIndexThreshold(temperatur);
 })
 
@@ -168,9 +225,6 @@ d3.json(kantone, function(data){
         .attr("fill-opacity", 0)
         .attr("stroke", "black")
         .attr("stroke-width", 0.3);
-    
-    //console.log(areas.attr("stroke"))
-        
 });
 
 // Badewetter-Index (hovering)
@@ -199,8 +253,7 @@ d3.json(lakes, function(lk){
         .attr("class", "lakes")
         .attr("fill", "skyblue")
         .attr("stroke", "black")
-        .attr("stroke-width", 0.1);
-            
+        .attr("stroke-width", 0.1);    
 });
 
 // Hauptorte
@@ -211,18 +264,18 @@ d3.json(hauptorte, function(orte){
             .data(orte.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(5))
+            .attr("d", path.pointRadius(radius))
             .attr("class", "orte")
             .style("fill", "white")
             .attr("stroke", "black")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
     
     //console.log(ortePoints.style("fill"))
     
-    // Checkbox
+    // Checkbox Interaction
     d3.select("#places").on("change", function(d){
         checked =  d3.select("#places").property("checked");
         if (checked) {
@@ -242,16 +295,16 @@ d3.json(riverdata, function(rivertemps){
             .data(rivertemps.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(5))
+            .attr("d", path.pointRadius(radius))
             .attr("class", "rivers")
             .style("fill", "white")
             .attr("stroke", "blue")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
     
-        // Checkbox
+        // Checkbox Interaction
         d3.select("#river").on("change", function(d){
             checked =  d3.select("#river").property("checked");
             if (checked) {
@@ -274,16 +327,16 @@ d3.json(weatherdata, function(weather){
             .data(weather.features)
             .enter()
             .append("path")
-            .attr("d", path.pointRadius(5))
+            .attr("d", path.pointRadius(radius))
             .attr("class", "weather")
             .style("fill", "white")
             .attr("stroke", "red")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
     
-        // Checkbox
+        // Checkbox Interaction
         d3.select("#meteo").on("change", function(d){
             checked =  d3.select("#meteo").property("checked");
             if (checked) {
