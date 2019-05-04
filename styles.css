@@ -2,7 +2,25 @@ body {
     background: slategrey;
 }
 
-.card:first-of-type {
+.loadingFrame {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.loading {
+    top: 30%;
+}
+
+.loadingFrame .loading h1{
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card {
     background: slategrey;
 }
 
@@ -12,6 +30,15 @@ h1 {
     font-size: 50px;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+}
+
+.blinker {
+  animation: blinker 2s linear infinite;  
+}
+@keyframes blinker {
+    25% {
+        opacity: 0;
+    }
 }
 
 h2 {
@@ -33,7 +60,7 @@ p {
 }
 
 #section1 {
-
+ background-color: slategrey;
 }
 
     #map {
