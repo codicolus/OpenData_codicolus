@@ -71,7 +71,7 @@ var mouseover = function(d) {
             Tooltip.html("<strong>" + d.properties.name.substr(0, d.properties.name.length - 7) + "</strong>" + "<br>" + "Temperaturklasse: " + d.properties["temp-class"] + "<br>")
             
         } else if(featureClass == "orte") {
-            Tooltip.html("<strong>" + "Kantonshauptort: " + "</strong>" + d.properties.ID1.substr(5))
+            Tooltip.html("<strong>" + d.properties.ID1.substr(5) + "</strong>" + " (Kanton " + d.properties.ID4 + ")")
         } else {
             var yesNo;
             if(d.properties.DN > threshold){
@@ -139,12 +139,30 @@ function updateRender(filepath, className){
                 .exit()
                 .remove();
             
-                
-            
             //console.log(gIndex.selectAll(className));
-            
                 
         }else{
+            
+            // enter
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .enter().append("path")
+                .attr("class", className.substr(1))
+                .attr("fill-opacity", 0)
+            
+            // update
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .transition()
+                .duration(1000)
+                .attr("d", path)
+                .attr("class", className.substr(1))
+            
+            // remove exit-selection
+            gIndex.selectAll(className)
+                .data(newFeatures)
+                .exit()
+                .remove();
             
             //console.log(gIndex2.selectAll(className));
             
@@ -166,7 +184,7 @@ d3.select("input#accuracy").on("change", function(d){
     if(accuracy == 1){
         filepath = "data/badeindex_vect32.geojson";
     } else if(accuracy == 2){
-        filepath = "data/badeindex_vect44.geojson";
+        filepath = "data/badeindex_vect44.json";
     } else {
         filepath = "data/badeindex_vect55.geojson";
     }
