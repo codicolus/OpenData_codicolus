@@ -5,10 +5,25 @@ var canvas = d3.select("#map")
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("viewBox", "0 0 1000 620");
 
-var gIndex = canvas.append("g");
+// Layer grouping
+var gIndex11 = canvas.append("g")
+    .attr("id", "res11");
+var gIndex12 = canvas.append("g")
+    .attr("id", "res12")
+    .attr("display", "none");
+var gIndex13 = canvas.append("g")
+    .attr("id", "res13")
+    .attr("display", "none");
 var gKantone = canvas.append("g");
 var gLakes = canvas.append("g");
-var gIndex2 = canvas.append("g");
+var gIndex21 = canvas.append("g")
+    .attr("id", "res21");
+var gIndex22 = canvas.append("g")
+    .attr("id", "res22")
+    .attr("display", "none");
+var gIndex23 = canvas.append("g")
+    .attr("id", "res23")
+    .attr("display", "none");
 var gHauptorte = canvas.append("g");
 var gRiver = canvas.append("g");
 var gWeather = canvas.append("g");
@@ -23,7 +38,9 @@ var lakes = "data/swissLakes.json";
 var hauptorte = "data/hauptorte.geojson";
 var riverdata = "data/flussdaten.geojson";
 var weatherdata = "data/weatherstation.geojson";
-var badewetterIndex = "data/badeindex_vect32.geojson"
+var index_res1 = "data/badeindex_vect32.json";
+var index_res2 = "data/badeindex_vect44.json";
+var index_res3 = "data/badeindex_vect55.json";
 
 // Temperatur-Index Threshold
 var threshold = 35
@@ -83,7 +100,7 @@ var mouseover = function(d) {
         }
     
     // Fill-Interaction
-    if(featureClass != "bw_index2"){
+    if(featureClass != ("index21" || "index22" || "index23")){
         var color = d3.select(this).attr("stroke");
         //console.log(color);
         d3.select(this).style("fill", color);
@@ -97,79 +114,39 @@ var mouseleave = function(d) {
     //Tooltip function
     Tooltip.style("opacity", 0)
     
-    if(d3.select(this).attr("class") != "bw_index2"){
+    if(d3.select(this).attr("class") != ("index21" || "index22" || "index23")){
         // Fill-Interaction
         d3.select(this).style("fill", "white");
     }
     
 }
 
-// Slider für unterschiedliche Genauigkeit
-function updateRender(filepath, className){
-    //Update Displayed-Index File + Hovered Index File
-    d3.json(filepath, function(newData){
-        var newFeatures = newData.features;
-        
-        //console.log(className);
-        
-        if (className == ".bw_index1"){
-            
-            // enter
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .enter().append("path")
-                .attr("class", className.substr(1))
-            
-            // update
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .transition()
-                .duration(1000)
-                .attr("d", path)
-                .attr("class", className.substr(1))
-                .attr("fill", function(d,i){
-                    var DN = newFeatures[i].properties.DN;
-                    var DN2 = 1-(DN/100)
-                    return d3.interpolateRdYlBu(DN2);
-                })
-            
-            // remove exit-selection
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .exit()
-                .remove();
-            
-            //console.log(gIndex.selectAll(className));
-                
-        }else{
-            
-            // enter
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .enter().append("path")
-                .attr("class", className.substr(1))
-                .attr("fill-opacity", 0)
-            
-            // update
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .transition()
-                .duration(1000)
-                .attr("d", path)
-                .attr("class", className.substr(1))
-            
-            // remove exit-selection
-            gIndex.selectAll(className)
-                .data(newFeatures)
-                .exit()
-                .remove();
-            
-            //console.log(gIndex2.selectAll(className));
-            
-            
-        }
-        
-    })
+// Aktivieren einer spezifischen Genauigkeit (Ersatz für update Function)
+function accuracyChange(res){
+    if (res == 1){
+        gIndex11.attr("display", "block");
+        gIndex12.attr("display", "none");
+        gIndex21.attr("display", "block");
+        gIndex22.attr("display", "none");
+        gIndex13.attr("display", "none");
+        gIndex23.attr("display", "none");
+    }
+    if (res == 2){
+        gIndex11.attr("display", "none");
+        gIndex12.attr("display", "block");
+        gIndex21.attr("display", "none");
+        gIndex22.attr("display", "block");
+        gIndex13.attr("display", "none");
+        gIndex23.attr("display", "none");
+    }
+    if (res == 3){
+        gIndex11.attr("display", "none");
+        gIndex12.attr("display", "none");
+        gIndex21.attr("display", "none");
+        gIndex22.attr("display", "none");
+        gIndex13.attr("display", "block");
+        gIndex23.attr("display", "block");
+    }
 }
 
 // Event-Listener Slider für Genauigkeit
@@ -178,20 +155,8 @@ d3.select("input#accuracy").on("change", function(d){
     // Update label
     document.getElementById("lbaccur").innerHTML = "Wert: " + accuracy;
 
-    var classesToUpdate = [".bw_index1", ".bw_index2"]
-    var filepath;
-
-    if(accuracy == 1){
-        filepath = "data/badeindex_vect32.geojson";
-    } else if(accuracy == 2){
-        filepath = "data/badeindex_vect44.json";
-    } else {
-        filepath = "data/badeindex_vect55.geojson";
-    }
-    
-    // Call Update Function
-    updateRender(filepath, classesToUpdate[0]);
-    updateRender(filepath, classesToUpdate[1])
+    // Update Layers
+    accuracyChange(accuracy);
 })
 
 
@@ -212,19 +177,61 @@ d3.select("input#parameter").on("change", function(d){
 })
 
 /* ---------------------- Layer Initialization --------------- */
-// Badewetter-Index (displayed)
-d3.json(badewetterIndex, function(bw){
+// Badewetter-Index (displayed) Accuracy 1
+d3.json(index_res1, function(bw){
     console.log(bw);
+    
+    var in_vals = topojson.feature(bw, bw.objects.badeindex_vect32).features;
                 
-    var bw_index1 = gIndex.selectAll(".bw_index1")
-        .data(bw.features)
+    var bw_index1 = gIndex11.selectAll(".index11")
+        .data(in_vals)
         .enter().append("path")
         .attr("d", path)
-        .attr("class", "bw_index1")
+        .attr("class", "index11")
         //.style("stroke", "none")
         //.attr("border-width", "0px")
         .attr("fill", function(d,i){
-            var DN = bw.features[i].properties.DN;
+            var DN = in_vals[i].properties.DN;
+            var DN2 = 1-(DN/100)
+            return d3.interpolateRdYlBu(DN2);
+        })
+});
+
+// Badewetter-Index (displayed) Accuracy 2
+d3.json(index_res2, function(bw){
+    console.log(bw);
+    
+    var in_vals = topojson.feature(bw, bw.objects.badeindex_vect44).features;
+                
+    var bw_index1 = gIndex12.selectAll(".index12")
+        .data(in_vals)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", "index12")
+        //.style("stroke", "none")
+        //.attr("border-width", "0px")
+        .attr("fill", function(d,i){
+            var DN = in_vals[i].properties.DN;
+            var DN2 = 1-(DN/100)
+            return d3.interpolateRdYlBu(DN2);
+        })
+});
+
+// Badewetter-Index (displayed) Accuracy 3
+d3.json(index_res3, function(bw){
+    console.log(bw);
+    
+    var in_vals = topojson.feature(bw, bw.objects.badeindex_vect55).features;
+                
+    var bw_index1 = gIndex13.selectAll(".index13")
+        .data(in_vals)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", "index13")
+        //.style("stroke", "none")
+        //.attr("border-width", "0px")
+        .attr("fill", function(d,i){
+            var DN = in_vals[i].properties.DN;
             var DN2 = 1-(DN/100)
             return d3.interpolateRdYlBu(DN2);
         })
@@ -245,15 +252,51 @@ d3.json(kantone, function(data){
         .attr("stroke-width", 0.3);
 });
 
-// Badewetter-Index (hovering)
-d3.json(badewetterIndex, function(bw2){
-    console.log(bw2);
+// Badewetter-Index (hovering) Accuracy 1
+d3.json(index_res1, function(bw2){
+    //console.log(bw2);
+    
+    var in_vals = topojson.feature(bw2, bw2.objects.badeindex_vect32).features;
                 
-    var bw_index2 = gIndex2.selectAll(".bw_index2")
-        .data(bw2.features)
+    var bw_index2 = gIndex21.selectAll(".index21")
+        .data(in_vals)
         .enter().append("path")
         .attr("d", path)
-        .attr("class", "bw_index2")
+        .attr("class", "index21")
+        .attr("fill-opacity", 0)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
+});
+
+// Badewetter-Index (hovering) Accuracy 2
+d3.json(index_res2, function(bw2){
+    //console.log(bw2);
+    
+    var in_vals = topojson.feature(bw2, bw2.objects.badeindex_vect44).features;
+                
+    var bw_index2 = gIndex22.selectAll(".index21")
+        .data(in_vals)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", "index21")
+        .attr("fill-opacity", 0)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
+});
+
+// Badewetter-Index (hovering) Accuracy 3
+d3.json(index_res3, function(bw2){
+    //console.log(bw2);
+    
+    var in_vals = topojson.feature(bw2, bw2.objects.badeindex_vect55).features;
+                
+    var bw_index2 = gIndex23.selectAll(".index23")
+        .data(in_vals)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", "index23")
         .attr("fill-opacity", 0)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
@@ -333,7 +376,7 @@ d3.json(riverdata, function(rivertemps){
             }
         })
     
-    console.log(rivertemps.features[1].geometry.coordinates[1])
+    //console.log(rivertemps.features[1].geometry.coordinates[1])
         
 });
 
