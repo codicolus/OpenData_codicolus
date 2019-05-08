@@ -1,3 +1,5 @@
+library(tidyverse)
+
 #define the length of each fixed-width column
 lengths <- c(
   str_length("stn                                       "),

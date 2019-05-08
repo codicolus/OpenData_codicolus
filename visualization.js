@@ -43,7 +43,7 @@ var index_res2 = "data/badeindex_vect44.json";
 var index_res3 = "data/badeindex_vect55.json";
 
 // Temperatur-Index Threshold
-var threshold = 35
+var threshold = 30
 
 // Define Projection and Path
 var projection = d3.geoMercator()
