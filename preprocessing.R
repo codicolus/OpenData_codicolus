@@ -24,7 +24,7 @@ temp_cont <- function(value, wgth){
     value = min
   }
   
-  std <- max / 100 * value
+  std <- 1 / max * value
   
   return(std*wgth)
 }
@@ -44,7 +44,7 @@ sun_cont <- function(value, wgth){
   # min = 0
   max = 10
   
-  std <- max / 100 * value
+  std <- 1 / max * value
   
   return(std*wgth)
 }
@@ -53,16 +53,18 @@ sun_cont <- function(value, wgth){
 glob_cont <- function(value, wgth){
   max = 1000
   
-  std <- max / 100 * value
+  std <- 1 / max * value
   
   return(std*wgth)
 }
 
 # Relative Humidity Contribution
 feu_cont <- function(value, wgth){
-  # for extremely high RH the weight is halved
-  std <- value / 100
+  max = 100
   
+  std <- 1 / max * value
+  
+  # for extremely high RH the weight is halved
   if(value > 90){
     wgth = wgth * 0.5
   }
@@ -80,7 +82,7 @@ wind_cont <- function(value, wgth){
     value = max
   }
   
-  std <- max / 100 * value
+  std <- 1 / max * value
   
   return((1-std)*wgth)
 }
