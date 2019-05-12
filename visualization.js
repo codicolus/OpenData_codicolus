@@ -53,6 +53,37 @@ var projection = d3.geoMercator()
 var path = d3.geo.path().projection(projection);
 
 /* ------------------------- Functionalities --------------- */
+// Converts temperature class in temperature-range
+var convertTempClass = function(tclass) {
+    if(tclass == 1){
+        return "<6 °C";
+    }
+    if(tclass == 2){
+        return "6-9 °C";
+    }
+    if(tclass == 3){
+        return "9-12 °C";
+    }
+    if(tclass == 4){
+        return "12-15 °C";
+    }
+    if(tclass == 5){
+        return "15-18 °C";
+    }
+    if(tclass == 6){
+        return "18-21 °C";
+    }
+    if(tclass == 7){
+        return "21-24 °C";
+    }
+    if(tclass == 8){
+        return ">24 °C";
+    }
+    
+    return "nicht verfügbar"
+}
+
+
 // Tooltip
 // create a tooltip
 var Tooltip = d3.select("#map")
@@ -81,11 +112,17 @@ var mouseover = function(d) {
         
         // if mouse hovers over wetter, read in metadata from weather
         if ( featureClass == "weather"){
-            Tooltip.html("<strong>"+d.properties.Name+"</strong>" + " (" + d.properties.Station + ")" + "<br>" + "Höhe (m.ü.M): " + d.properties.Höhe + "<br>" + "Lufttemperatur (°C): " + d.properties["Temperatur (°C)"] + "<br>" + "Luftfeuchtigkeit (%): " + d.properties["Luftfeuchte (%)"] + "<br>" + "Niederschlag (mm): " + d.properties["Niederschlag (mm)"])
+            numstring = d.properties.Time.toString();
+            
+            Tooltip.html("<strong>"+d.properties.Name+"</strong>" + " (" + d.properties.Station + ")" + "<br>" + "Höhe (m.ü.M): " + d.properties.Höhe + "<br>" + "Lufttemperatur (°C): " + d.properties["Temperatur (°C)"] + "<br>" + "Luftfeuchtigkeit (%): " + d.properties["Luftfeuchte (%)"] + "<br>" + "Niederschlag (mm): " + d.properties["Niederschlag (mm)"] + "<br>" + "" + "<br>" +
+                        numstring.substring(6,8) + "." + numstring.substring(4,6) +
+                        "." + numstring.substring(0,4) +
+                        " " + numstring.substring(8,10) + ":" +
+                        numstring.substring(10,12))
             
         // if mouse hovers over flussMess, read in metadata from flussMess    
         } else if(featureClass == "rivers") {
-            Tooltip.html("<strong>" + d.properties.name.substr(0, d.properties.name.length - 7) + "</strong>" + "<br>" + "Temperaturklasse: " + d.properties["temp-class"] + "<br>")
+            Tooltip.html("<strong>" + d.properties.name.substr(0, d.properties.name.length - 7) + "</strong>" + "<br>" + "Temperaturklasse: " + convertTempClass(d.properties["temp-class"]) + "<br>")
             
         } else if(featureClass == "orte") {
             Tooltip.html("<strong>" + d.properties.ID1.substr(5) + "</strong>" + " (Kanton " + d.properties.ID4 + ")")

@@ -13,15 +13,15 @@ library(bit64)
 #
 # Contribution of temperatur, precipitation, sunshine, globalstrahlung, feuchtigkeit, wind
 # Temperature Contribution
-temp_cont <- function(value, wgth){
+temp_cont <- function(value, wgth, max){
   # if temperature is below zero then value set to zero as other factors are dominant
   # then the variable is "standardized" according to meaningful values
   # returned is the standardized value * weight
-  min = 0
-  max = 45
+  #min = 0
+  #max = 45
   
   if(value < 0){
-    value = min
+    value = 0
   }
   
   std <- 1 / max * value
@@ -40,9 +40,9 @@ prec_cont <- function(value, wgth){
 }
 
 # Sunshine Contribution
-sun_cont <- function(value, wgth){
+sun_cont <- function(value, wgth, max){
   # min = 0
-  max = 10
+  # max = 10
   
   std <- 1 / max * value
   
@@ -50,8 +50,8 @@ sun_cont <- function(value, wgth){
 }
 
 # Global Radiation Contribution
-glob_cont <- function(value, wgth){
-  max = 1000
+glob_cont <- function(value, wgth, max){
+  #max = 1000
   
   std <- 1 / max * value
   
@@ -73,12 +73,12 @@ feu_cont <- function(value, wgth){
 }
 
 # Wind Speed Contribution
-wind_cont <- function(value, wgth){
+wind_cont <- function(value, wgth, max){
   # max acceptable wind speed = 25
   # the higher the speed the less less it contributes to the index
-  max = 25
+  # max = 25
   
-  if(value > 25){
+  if(value > max){
     value = max
   }
   
@@ -89,6 +89,23 @@ wind_cont <- function(value, wgth){
 
 ###################################################################################################
 # Section 1: Get newest data + preprocessing for index calculation
+# Settings
+# Temp
+temp_max <-  45
+temp_wgt <-  0.4
+# Precip
+prec_wgt <- 0.2
+# Sunshine
+sun_max <- 10
+sun_wgt <- 0.05
+# GlobRad
+glob_max <- 1000
+glob_wgt <- 0.05
+# RH / Feu
+feu_wgt <- 0.15
+# Wind
+wind_max <- 25
+wind_wgt <- 0.15
 
 # 1.1 Read and Process newest Meteo-Station data
 url <- "https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/VQHA80.csv"
@@ -112,12 +129,14 @@ subset_cols <- cols_new[c(1:7, 10)]
 badewetter_subset <- ms_data[, subset_cols]
 
 # clean workspace
-rm(list=setdiff(ls(), c("badewetter_subset", "subset_cols")))
+rm(list=setdiff(ls(), c("badewetter_subset", "subset_cols", "feu_cont", "glob_cont", "prec_cont", "sun_cont",
+                        "temp_cont", "wind_cont", "feu_wgt", "glob_max", "glob_wgt", "prec_wgt", "sun_max", "sun_wgt", 
+                        "temp_max", "temp_wgt", "wind_max", "wind_wgt")))
 
 
 ###################################################################################################
 # Section 2: Get Metadata from stations
-meta_path <- "data/metadata.txt"
+meta_path <- "data/metadata_wetterstationen.txt"
 
 #define fix-width lengths
 #define the length of each fixed-width column
@@ -155,7 +174,9 @@ meta <- mutate(meta,
 
 #clean workspace
 # Attention: badewetter_subset should be kept in scope! Otherwise code failures will occur
-rm(list=setdiff(ls(), c("badewetter_subset", "meta")))
+rm(list=setdiff(ls(), c("badewetter_subset", "meta", "feu_cont", "glob_cont", "prec_cont", "sun_cont",
+                        "temp_cont", "wind_cont","feu_wgt", "glob_max", "glob_wgt", "prec_wgt", "sun_max", "sun_wgt", 
+                        "temp_max","temp_wgt", "wind_max", "wind_wgt")))
 
 
 ###################################################################################################
@@ -188,12 +209,21 @@ for(i in 1:r){
     
     #index[i] <- 0.4*temp + 0.2*prec + 0.05*sun + 0.05*glob + 0.15*feu + 0.15*wind
     
-    index[i] <- temp_cont(temp, 0.4) + prec_cont(prec, 0.2) + sun_cont(sun, 0.05) + glob_cont(glob, 0.05) +
-      feu_cont(feu, 0.15) + wind_cont(wind, 0.15)
+    index[i] <- temp_cont(temp, temp_wgt, temp_max) + prec_cont(prec, prec_wgt) + sun_cont(sun, sun_wgt, sun_max) + 
+      glob_cont(glob, glob_wgt, glob_max) + feu_cont(feu, feu_wgt) + wind_cont(wind, wind_wgt, wind_max)
   }
 }
 
-index <- as.integer(index)
+#maxindex
+maxi <- temp_cont(temp_max, temp_wgt, temp_max) + prec_cont(0, prec_wgt) + sun_cont(sun_max, sun_wgt, sun_max) + 
+  glob_cont(glob_max, glob_wgt, glob_max) + feu_cont(90, feu_wgt) + wind_cont(0, wind_wgt, wind_max)
+(maxi*100)
+#minindex
+mini <- temp_cont(-10, temp_wgt, temp_max) + prec_cont(1, prec_wgt) + sun_cont(0, sun_wgt, sun_max) + 
+  glob_cont(0, glob_wgt, glob_max) + feu_cont(0, feu_wgt) + wind_cont(wind_max, wind_wgt, wind_max)
+(mini*100)
+
+index <- as.integer(index*100)
 joined[,c+1] <- index
 colnames(joined)[c+1] <- "Index"
 
@@ -202,11 +232,23 @@ cols <- colnames(joined)
 ###################################################################################################
 # Section 5: WRITING END-PRODUCT FILES FOR USE IN QGIS
 #Write csv
-write.csv(file, "badeindex.csv", row.names = F, na = "-", fileEncoding = "ISO-8859-1")
+write.csv(joined, "badeindex.csv", row.names = F, na = "-", fileEncoding = "ISO-8859-1")
 
 # defining what variable type each column is (required for reading in QGIS)
 col_type <- c("\"String\", \"String\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\", \"Real\"")
 
 write(col_type, "badeindex.csvt", ncolumns = length(cols))
 
+###################################################################################################
+# Section 6: Fetching newest river- data
 
+# url
+file <- "http://data.geo.admin.ch/ch.bafu.hydroweb-messstationen_temperatur/ch.bafu.hydroweb-messstationen_temperatur_de.json"
+# data
+data <- readLines(file)
+
+# write JSON
+write(data, file="riverdata.json")
+
+
+rm(list=ls())
