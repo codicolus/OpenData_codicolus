@@ -3,7 +3,7 @@
 var canvas = d3.select("#map")
                 .append("svg")
                 .attr("preserveAspectRatio", "xMinYMin meet")
-                .attr("viewBox", "0 0 1000 620");
+                .attr("viewBox", "0 0 1000 650");
 
 // Layer grouping
 var gIndex11 = canvas.append("g")
@@ -446,3 +446,163 @@ d3.json(weatherdata, function(weather){
         })
         
 });
+
+// --------------------------------------
+// Colorscale and Legend Creation
+var legend = canvas.append("g")
+                .attr("class", "legendSequential")
+                .attr("transform", "translate(190,580)");
+
+// Gradient-Scale
+var lingrad = legend.append("linearGradient")
+                .attr("id", "grad1")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "100%")
+                .attr("y2", "0%");
+lingrad.append("stop")
+    .attr("offset", "0%")
+    .style("stop-color", d3.interpolateYlOrRd(0))
+    .style("stop-opacity", 1);
+lingrad.append("stop")
+    .attr("offset", "50%")
+    .style("stop-color", d3.interpolateYlOrRd(0.5))
+    .style("stop-opacity", 1);
+lingrad.append("stop")
+    .attr("offset", "100%")
+    .style("stop-color", d3.interpolateYlOrRd(1))
+    .style("stop-opacity", 1);
+
+var bbox = legend.node().getBoundingClientRect();
+var width = bbox.width;
+var height = bbox.height;
+
+// Colorbar
+legend.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 550)
+    .attr("height", 20)
+    .attr("fill", "url(#grad1)")
+    .attr("stroke", "white");
+// Ticks
+legend.append("text")
+    .attr("x", -1)
+    .attr("y", 27)
+    .style("font-family", "Open Sans")
+    .style("font-size", "10px")
+    .style("fill", "white")
+    .text("I")
+legend.append("text")
+    .attr("x", 275)
+    .attr("y", 27)
+    .style("font-family", "Open Sans")
+    .style("font-size", "10px")
+    .style("fill", "white")
+    .text("I")
+legend.append("text")
+    .attr("x", 548.5)
+    .attr("y", 27)
+    .style("font-family", "Open Sans")
+    .style("font-size", "10px")
+    .style("fill", "white")
+    .text("I")
+
+// Quantities
+legend.append("text")
+    .attr("x", -3)
+    .attr("y", 40)
+    .style("font-family", "Open Sans")
+    .style("font-size", "12px")
+    .style("fill", "white")
+    .text("0")
+legend.append("text")
+    .attr("x", 269.5)
+    .attr("y", 40)
+    .style("font-family", "Open Sans")
+    .style("font-size", "12px")
+    .style("fill", "white")
+    .text("50")
+legend.append("text")
+    .attr("x", 539.5)
+    .attr("y", 40)
+    .style("font-family", "Open Sans")
+    .style("font-size", "12px")
+    .style("fill", "white")
+    .text("100")
+
+//Title
+legend.append("text")
+    .attr("x", 0)
+    .attr("y", -10)
+    .style("font-family", "Open Sans")
+    .style("font-size", "15px")
+    .style("fill", "white")
+    .style("font-weight", "bold")
+    .text("Index-Skala")
+
+
+// Punkte-Legende
+var pointLegend = canvas.append("g")
+                    .attr("class", "pointLegend")
+                    .attr("transform", "translate(750, 500)")
+                    .attr("color", "lightgrey");
+
+//Title
+pointLegend.append("text")
+    .attr("x", 5)
+    .attr("y", -20)
+    .style("font-family", "Open Sans")
+    .style("font-size", "15px")
+    .style("font-weight", "bold")
+    .style("fill", "black")
+    .text("Punktdaten")
+
+
+// Circles + Legend-Text
+pointLegend.append("circle")
+    .attr("cx", 10)
+    .attr("cy", 0)
+    .attr("r", 6)
+    .attr("fill", "white")
+    .attr("stroke", "black")
+    .attr("stroke-width", 2)
+
+
+pointLegend.append("circle")
+    .attr("cx", 10)
+    .attr("cy", 20)
+    .attr("r", 6)
+    .attr("fill", "white")
+    .attr("stroke", "blue")
+    .attr("stroke-width", 2)
+
+pointLegend.append("circle")
+    .attr("cx", 10)
+    .attr("cy", 40)
+    .attr("r", 6)
+    .attr("fill", "white")
+    .attr("stroke", "red")
+    .attr("stroke-width", 2)
+
+pointLegend.append("text")
+    .attr("x", 25)
+    .attr("y", 5)
+    .style("font-family", "Open Sans")
+    .style("font-size", "15px")
+    .style("fill", "black")
+    .text("Kantonshauptorte")
+pointLegend.append("text")
+    .attr("x", 25)
+    .attr("y", 25)
+    .style("font-family", "Open Sans")
+    .style("font-size", "15px")
+    .style("fill", "blue")
+    .text("Flussmessstationen")
+pointLegend.append("text")
+    .attr("x", 25)
+    .attr("y", 45)
+    .style("font-family", "Open Sans")
+    .style("font-size", "15px")
+    .style("fill", "red")
+    .text("Wetterstationen")
