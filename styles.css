@@ -101,14 +101,25 @@ input[type=range]:focus {
     outline: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track,
+input[type=range]::-webkit-slider-runnable-track{
+    width: 100%;
+    height: 1px;
+    cursor: pointer;
+}
 input[type=range]::-moz-range-track{
     width: 100%;
     height: 1px;
     cursor: pointer;
 }
 
-input[type=range]::-webkit-slider-thumb,
+input[type=range]::-webkit-slider-thumb{
+    height: 50px;
+    width: 20px;
+    border-radius: 3px;
+    background-color: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
 input[type=range]::-moz-range-thumb{
     height: 50px;
     width: 20px;
@@ -118,26 +129,37 @@ input[type=range]::-moz-range-thumb{
     -webkit-appearance: none;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track,
+input[type=range]:focus::-webkit-slider-runnable-track{
+    background: white;
+}
 input[type=range]:focus::-moz-range-track{
     background: white;
 }
 
-.buffer > input[type=range]::-webkit-slider-thumb,
+.buffer > input[type=range]::-webkit-slider-thumb{
+    background: url(data/icons/zirkel.svg) center center no-repeat;
+    background-size: 50px 40px;
+    margin-top: -26px;
+}
+
 .buffer > input[type=range]::-moz-range-thumb{
     background: url(data/icons/zirkel.svg) center center no-repeat;
     background-size: 50px 40px;
     margin-top: -26px;
 }
 
-.baden > input[type=range]::-webkit-slider-thumb,
+.baden > input[type=range]::-webkit-slider-thumb{
+    background: url(data/icons/thermometer_white.svg) center center no-repeat;
+    background-size: 40px 40px;
+    margin-top: -25px;
+}
 .baden > input[type=range]::-moz-range-thumb{
     background: url(data/icons/thermometer_white.svg) center center no-repeat;
     background-size: 40px 40px;
     margin-top: -25px;
 }
 
-/* Edge Slider Styling */
+/*
 input[type=range]::-ms-track {
   width: 100%;
   height: 1px;
@@ -176,6 +198,8 @@ input[type=range]::-ms-thumb {
     background: url(data/icons/thermometer_white.svg) center center no-repeat;
     background-size: 40px 20px;
 }
+
+*/
 
 #section2 {
     

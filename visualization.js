@@ -44,6 +44,7 @@ var index_res3 = "data/badeindex_vect55.json";
 
 // Temperatur-Index Threshold
 var threshold = 30
+//var threshold = 68;
 
 // Define Projection and Path
 var projection = d3.geoMercator()
@@ -124,8 +125,13 @@ function updateIndexThreshold(temperatur){
     var index = tempCont(temperatur, 0.4, 45) + precCont(0, 0.2) +
                 sunCont(5, 0.05, 10) + globCont(500, 0.05, 1000) +
                 feuCont(70, 0.15) + windCont(0, 0.15, 25);
-    /* var index = Math.ceil(0.4 * temperatur + 22); */
-    threshold = Math.ceil(100*index);
+    
+    var index = Math.ceil(0.4 * temperatur + 22);
+    
+    //threshold = Math.floor(100*index);
+    threshold = Math.floor(index);
+    
+    
     
     console.log("Hallo");
     console.log(threshold);
