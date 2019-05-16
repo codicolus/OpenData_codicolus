@@ -30,7 +30,7 @@ var gWeather = canvas.append("g");
 
 // Point-Settings
 var radius = 4;
-var strkwdt = 2;
+var strkwdt = 1;
 
 // File-Paths
 var kantone = "data/kantone_lines.geojson";
@@ -52,6 +52,94 @@ var projection = d3.geoMercator()
                 
 var path = d3.geo.path().projection(projection);
 
+
+// ------------------------ Dynamic Index Calculation------------------
+// Contributions of individual parameters
+// Temperature
+var tempCont = function(value, wgt, max){
+    if(value < 0){
+        value = 0;
+    }
+    
+    var std = 1 / max * value;
+    
+    console.log(std * wgt);
+    
+    return std * wgt;
+}
+// Precipitation
+var precCont = function(value, wgt){
+    if(value > 0){
+        return 0;
+    }
+    console.log(wgt);
+    return wgt;
+}
+// Sunshine
+var sunCont = function(value, wgt, max){
+    var std = 1 / max * value;
+    
+    console.log(std*wgt);
+    
+    return std * wgt;
+}
+// Global Radiation
+var globCont = function(value, wgt, max){
+    
+    var std = 1 / max * value;
+    
+    console.log(std*wgt);
+    
+    return std * wgt;
+}
+// Relative Humidity
+var feuCont = function(value, wgt){
+    var max = 100;
+    
+    var std = 1 / max * value;
+    
+    if(value > 90){
+        wgt = wgt * 0.5;
+    }
+    
+    console.log(std*wgt);
+    
+    return std * wgt;
+}
+// Wind
+var windCont = function(value, wgt, max){
+    if(value > max){
+        value = max;
+    }
+    
+    var std = 1 / max * value;
+    
+    console.log((1-std)*wgt);
+    
+    return ((1-std)*wgt);
+}
+
+// Slider für Temperatureingabe
+function updateIndexThreshold(temperatur){
+    var index = tempCont(temperatur, 0.4, 45) + precCont(0, 0.2) +
+                sunCont(5, 0.05, 10) + globCont(500, 0.05, 1000) +
+                feuCont(70, 0.15) + windCont(0, 0.15, 25);
+    /* var index = Math.ceil(0.4 * temperatur + 22); */
+    threshold = Math.ceil(100*index);
+    
+    console.log("Hallo");
+    console.log(threshold);
+}
+
+// Event-Listener Slider für Temperatureingabe
+d3.select("input#parameter").on("change", function(d){
+    var temperatur = this.value;
+    //Update label
+    document.getElementById("lbparam").innerHTML = "Wert: " + temperatur + " °C";
+    
+    // Call Threshold-Update Function
+    updateIndexThreshold(temperatur);
+})
 /* ------------------------- Functionalities --------------- */
 // Converts temperature class in temperature-range
 var convertTempClass = function(tclass) {
@@ -140,7 +228,8 @@ var mouseover = function(d) {
     if(featureClass != ("index21" || "index22" || "index23")){
         var color = d3.select(this).attr("stroke");
         //console.log(color);
-        d3.select(this).style("fill", color);
+        d3.select(this).style("fill", color)
+            .attr("fill-opacity", 1);
     }
     
 }
@@ -153,7 +242,8 @@ var mouseleave = function(d) {
     
     if(d3.select(this).attr("class") != ("index21" || "index22" || "index23")){
         // Fill-Interaction
-        d3.select(this).style("fill", "white");
+        d3.select(this).style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5);
     }
     
 }
@@ -196,23 +286,6 @@ d3.select("input#accuracy").on("change", function(d){
     accuracyChange(accuracy);
 })
 
-
-// Slider für Temperatureingabe
-function updateIndexThreshold(temperatur){
-    index = Math.ceil(0.4 * temperatur + 22);
-    threshold = index;
-}
-
-// Event-Listener Slider für Temperatureingabe
-d3.select("input#parameter").on("change", function(d){
-    var temperatur = this.value;
-    //Update label
-    document.getElementById("lbparam").innerHTML = "Wert: " + temperatur + " °C";
-    
-    // Call Threshold-Update Function
-    updateIndexThreshold(temperatur);
-})
-
 /* ---------------------- Layer Initialization --------------- */
 // Badewetter-Index (displayed) Accuracy 1
 d3.json(index_res1, function(bw){
@@ -230,7 +303,7 @@ d3.json(index_res1, function(bw){
         .attr("fill", function(d,i){
             var DN = in_vals[i].properties.DN;
             var DN2 = 1-(DN/100)
-            return d3.interpolateRdYlBu(DN2);
+            return d3.interpolateYlOrRd(DN/100);
         })
 });
 
@@ -250,7 +323,7 @@ d3.json(index_res2, function(bw){
         .attr("fill", function(d,i){
             var DN = in_vals[i].properties.DN;
             var DN2 = 1-(DN/100)
-            return d3.interpolateRdYlBu(DN2);
+            return d3.interpolateYlOrRd(DN/100);
         })
 });
 
@@ -270,7 +343,7 @@ d3.json(index_res3, function(bw){
         .attr("fill", function(d,i){
             var DN = in_vals[i].properties.DN;
             var DN2 = 1-(DN/100)
-            return d3.interpolateRdYlBu(DN2);
+            return d3.interpolateYlOrRd(DN/100);
         })
 });
 
@@ -364,7 +437,8 @@ d3.json(hauptorte, function(orte){
             .append("path")
             .attr("d", path.pointRadius(radius))
             .attr("class", "orte")
-            .style("fill", "white")
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5)
             .attr("stroke", "black")
             .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
@@ -395,7 +469,8 @@ d3.json(riverdata, function(rivertemps){
             .append("path")
             .attr("d", path.pointRadius(radius))
             .attr("class", "rivers")
-            .style("fill", "white")
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5)
             .attr("stroke", "blue")
             .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
@@ -427,7 +502,8 @@ d3.json(weatherdata, function(weather){
             .append("path")
             .attr("d", path.pointRadius(radius))
             .attr("class", "weather")
-            .style("fill", "white")
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5)
             .attr("stroke", "red")
             .attr("stroke-width", strkwdt)
             .on("mouseover", mouseover)
@@ -484,28 +560,28 @@ legend.append("rect")
     .attr("width", 550)
     .attr("height", 20)
     .attr("fill", "url(#grad1)")
-    .attr("stroke", "white");
+    .attr("stroke", "whitesmoke");
 // Ticks
 legend.append("text")
     .attr("x", -1)
     .attr("y", 27)
     .style("font-family", "Open Sans")
     .style("font-size", "10px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("I")
 legend.append("text")
     .attr("x", 275)
     .attr("y", 27)
     .style("font-family", "Open Sans")
     .style("font-size", "10px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("I")
 legend.append("text")
     .attr("x", 548.5)
     .attr("y", 27)
     .style("font-family", "Open Sans")
     .style("font-size", "10px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("I")
 
 // Quantities
@@ -514,21 +590,21 @@ legend.append("text")
     .attr("y", 40)
     .style("font-family", "Open Sans")
     .style("font-size", "12px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("0")
 legend.append("text")
     .attr("x", 269.5)
     .attr("y", 40)
     .style("font-family", "Open Sans")
     .style("font-size", "12px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("50")
 legend.append("text")
     .attr("x", 539.5)
     .attr("y", 40)
     .style("font-family", "Open Sans")
     .style("font-size", "12px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .text("100")
 
 //Title
@@ -537,7 +613,7 @@ legend.append("text")
     .attr("y", -10)
     .style("font-family", "Open Sans")
     .style("font-size", "15px")
-    .style("fill", "white")
+    .style("fill", "whitesmoke")
     .style("font-weight", "bold")
     .text("Index-Skala")
 
@@ -555,7 +631,7 @@ pointLegend.append("text")
     .style("font-family", "Open Sans")
     .style("font-size", "15px")
     .style("font-weight", "bold")
-    .style("fill", "black")
+    .style("fill", "whitesmoke")
     .text("Punktdaten")
 
 
@@ -564,7 +640,7 @@ pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 0)
     .attr("r", 6)
-    .attr("fill", "white")
+    .attr("fill", "#3f3d3d")
     .attr("stroke", "black")
     .attr("stroke-width", 2)
 
@@ -573,7 +649,7 @@ pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 20)
     .attr("r", 6)
-    .attr("fill", "white")
+    .attr("fill", "#3f3d3d")
     .attr("stroke", "blue")
     .attr("stroke-width", 2)
 
@@ -581,7 +657,7 @@ pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 40)
     .attr("r", 6)
-    .attr("fill", "white")
+    .attr("fill", "#3f3d3d")
     .attr("stroke", "red")
     .attr("stroke-width", 2)
 
@@ -590,19 +666,19 @@ pointLegend.append("text")
     .attr("y", 5)
     .style("font-family", "Open Sans")
     .style("font-size", "15px")
-    .style("fill", "black")
+    .style("fill", "whitesmoke")
     .text("Kantonshauptorte")
 pointLegend.append("text")
     .attr("x", 25)
     .attr("y", 25)
     .style("font-family", "Open Sans")
     .style("font-size", "15px")
-    .style("fill", "blue")
+    .style("fill", "whitesmoke")
     .text("Flussmessstationen")
 pointLegend.append("text")
     .attr("x", 25)
     .attr("y", 45)
     .style("font-family", "Open Sans")
     .style("font-size", "15px")
-    .style("fill", "red")
+    .style("fill", "whitesmoke")
     .text("Wetterstationen")
