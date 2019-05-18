@@ -91,6 +91,18 @@ p {
         color: whitesmoke;
     }
 
+form {
+    margin: 20px 0px;
+}
+
+label {
+    margin-left: 5px;
+}
+
+input[type=checkbox]{
+    margin-left: 20px;
+}
+
 /* Slider Styling for Mozilla and Chrome */
 input[type=range] {
     -webkit-appearance:none;

@@ -71,33 +71,33 @@
                     <div id="map" class="col-sm-12 col-md-12 col-lg-9">
                     </div>
                     <div id="sidebar" class="col-sm-12 col-md-12 col-lg-3">
-                        <h2>Visualisierung</h2>
+                        <h2>Beschreibung</h2>
 
                         <p>hallohallo. hie chunnt e chlini beschribig dri vom inhalt vo der charte</p>
 
-                        <h2>Interaktionen</h2>
+                        <h2>Einstellungen</h2>
 
                         <form>
                             <div class="buffer">
-                                <h6 class="col-lg-12"><strong>Bufferdistanz (Genauigkeit) festlegen</strong></h6>
+                                <h6 class="col-lg-12"><strong>Index-Genauigkeit festlegen</strong><br>(1 = hoch &nbsp; 3 = niedrig)</h6>
                                 <input type="range" class="custom-range col-lg-12 col-sm-3" min="1" max="3" step="1" value="1" id="accuracy">
                                 <label for="accuracy" id="lbaccur">Wert: 1</label>
                             </div>
                         </form>
                         <form>
                             <div class="baden">
-                                <h6 class="col-lg-12"><strong>Ab wann gehst du baden?</strong></h6>
+                                <h6 class="col-lg-12"><strong>Bei welcher Lufttemperatur gehts du baden?</strong></h6>
                                 <input type="range" class="custom-range col-lg-12 col-sm-3" min="10" max="45" step="1" value="20" id="parameter">
                                 <label for="parameter" id="lbparam">Wert: 20 °C</label>
                             </div>
                         </form>
                         <form>
                             <div>
-                                <h6 class="col-lg-12"><strong>Aktivieren/Deaktivieren von Layern</strong></h6>
+                                <h6 class="col-lg-12"><strong>Layers aktivieren/deaktivieren</strong></h6>
                                 <!-- Button -->
                                 <div>
-                                  <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label>
-                                  <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label>
+                                  <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label><br>
+                                  <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label><br>
                                   <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
                                 </div>
                             </div>

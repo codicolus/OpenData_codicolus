@@ -186,8 +186,9 @@ var Tooltip = d3.select("#map")
   .attr("position", "fixed")
   .style("opacity", 0)
   //.attr("display", "none")
-  .style("background-color", "white")
+  .style("background-color", "#3f3d3d")
   .style("border", "solid")
+  .style("color", "whitesmoke")
   .style("border-width", "2px")
   .style("border-radius", "5px")
   .style("padding", "5px")
@@ -642,30 +643,44 @@ pointLegend.append("text")
 
 
 // Circles + Legend-Text
+var legRad = 6;
+
 pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 0)
-    .attr("r", 6)
+    .attr("r", legRad)
     .attr("fill", "#3f3d3d")
     .attr("stroke", "black")
     .attr("stroke-width", 2)
+    .attr("class", "orte_legend")
+    .attr("cursor", "pointer")
+    .on("mouseover", makeBig)
+    .on("mouseleave", backSmall);
 
 
 pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 20)
-    .attr("r", 6)
+    .attr("r", legRad)
     .attr("fill", "#3f3d3d")
     .attr("stroke", "blue")
     .attr("stroke-width", 2)
+    .attr("class", "river_legend")
+    .attr("cursor", "pointer")
+    .on("mouseover", makeBig)
+    .on("mouseleave", backSmall);
 
 pointLegend.append("circle")
     .attr("cx", 10)
     .attr("cy", 40)
-    .attr("r", 6)
+    .attr("r", legRad)
     .attr("fill", "#3f3d3d")
     .attr("stroke", "red")
     .attr("stroke-width", 2)
+    .attr("class", "weather_legend")
+    .attr("cursor", "pointer")
+    .on("mouseover", makeBig)
+    .on("mouseleave", backSmall);
 
 pointLegend.append("text")
     .attr("x", 25)
@@ -688,3 +703,67 @@ pointLegend.append("text")
     .style("font-size", "15px")
     .style("fill", "whitesmoke")
     .text("Wetterstationen")
+
+function makeBig(){
+    var which = d3.select(this).attr("class")
+    
+    if(which == "orte_legend"){
+        gHauptorte.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(6))
+            .style("fill", "black")
+            .attr("fill-opacity", 1);
+        
+        d3.select(this).style("fill", "black");
+    }
+    if(which == "river_legend"){
+        gRiver.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(6))
+            .style("fill", "blue")
+            .attr("fill-opacity", 1)
+        
+        d3.select(this).style("fill", "blue");
+    }
+    if(which == "weather_legend"){
+        gWeather.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(6))
+            .style("fill", "red")
+            .attr("fill-opacity", 1)
+        
+        d3.select(this).style("fill", "red");
+    }
+}
+
+function backSmall(){
+    var which = d3.select(this).attr("class");
+    
+    if(which == "orte_legend"){
+        gHauptorte.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(radius))
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5);
+        
+        d3.select(this).style("fill", "#3f3d3d");
+    }
+    if(which == "river_legend"){
+        gRiver.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(radius))
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5)
+        
+        d3.select(this).style("fill", "#3f3d3d");
+    }
+    if(which == "weather_legend"){
+        gWeather.selectAll("path").transition()
+            .duration(1000)
+            .attr("d", path.pointRadius(radius))
+            .style("fill", "#3f3d3d")
+            .attr("fill-opacity", 0.5)
+        
+        d3.select(this).style("fill", "#3f3d3d");
+    }
+}
