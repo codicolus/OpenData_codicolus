@@ -102,6 +102,7 @@ form {
 
 label {
     margin-left: 5px;
+    color: whitesmoke;
 }
 
 input[type=checkbox]{
@@ -218,7 +219,12 @@ input[type=range]::-ms-thumb {
 */
 
 #section2 {
-    
+    color: whitesmoke;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 17px;
 }
 
     #metadata {
@@ -232,4 +238,28 @@ input[type=range]::-ms-thumb {
 #section3 {
     background-color: khaki;
     
+}
+
+#section3 h3 {
+    margin: 10px;
+}
+
+#section3 img {
+    border-radius: 50%;
+}
+
+.image-container {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    background-color: gray;
+    background-image: url(data/authors/BS.jpeg)
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.author {
+    display: flex;
+    justify-content: center;
 }
