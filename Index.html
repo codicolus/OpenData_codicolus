@@ -73,7 +73,7 @@
                     <div id="sidebar" class="col-sm-12 col-md-12 col-lg-3">
                         <h2>Beschreibung</h2>
 
-                        <p class="description">Mit dem Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) verwendet.<br>
+                        <p class="description">Mit dem Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) sowie vom Bundesamt für Statistik (BfS) verwendet.<br>
                         Der Index wird aus der gewichteten Summe von 6 Parametern berechnet.<br> Der Index basiert auf dem Ermessen der Autoren. Er dient hauptsächlich dem Zweck der Visualisierung und ist nicht wissenschaftlich abgesichert. <br></p>
 
                         <h2>Einstellungen</h2>
@@ -118,7 +118,7 @@
                         <ul>
                             <li>Die angezeigten Punktdaten können per Checkbox ein- und ausgeschaltet werden.</li>
                             <li>Was Badewetter ist bestimmen Sie! Die Lufttemperatur lässt sich nach Ihren Wünschen einstellen.</li>
-                            <li>Die räumliche Auflösung der Interpolation des Badewetter-Index lässt sich anhand von 3 Stufen einstellen.</li>
+                            <li>Die räumliche Genauigkeit der Interpolation des Badewetter-Index lässt sich anhand von 3 Stufen einstellen.</li>
                             <li>Die aktuellsten Messwerte der Wetterstationen und der Flussmessstationen werden beim überfahren einer Station angezeigt. Auch die Kantonshauptorte werden angezeigt.</li>
                             <li>Beim Überfahren eines beliebigen Punktes auf der Schweizerkarte werden Informationen zum Badewetter-Index angezeigt.</li>
                             <li>Beim Überfahren der Punkdatenlegende werden alle zugehörigen Punkte einer Kategorie hervorgehoben.</li>
@@ -136,11 +136,11 @@
                             <li>Aktuelle Messwerte der Automatischen Wetterstationen von MeteoSchweiz</li>
                             <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/automatische-wetterstationen-aktuelle-messwerte">OpenData-Portal</a>.</p>
                             
-                            <li>Die aktuellen Wassertemperaturen (in Klassen) der Flüssen des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
+                            <li>Die aktuellen Wassertemperaturen (in Temperatur-Klassen) der Flüssen des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
                             <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse">OpenData-Portal</a>.</p>
                             
                             <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BfS).</li>
-                            <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html">Webseite des Bundesamt für Statistik</a>.</p>
+                            <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html">Webseite des Bundesamts für Statistik</a>.</p>
                         </ol>
                     </div>
                     
@@ -149,6 +149,12 @@
                     <div class="col-sm-12 col-md-12 col-lg-5">
                         <h3>Über die Autoren</h3>
                         <div class="row">
+                            
+                            <div class="card">
+                                <img class="card-img-right" src="data/authors/BS.jpeg" height=200 width=200/>
+                            </div>
+                            
+                            
                             <div class="col-sm-6 col-md-6 col-lg-6 author">
                                 <div class="row">
                                     <div class="image-container">
