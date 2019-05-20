@@ -42,6 +42,9 @@ var index_res1 = "data/badeindex_vect32.json";
 var index_res2 = "data/badeindex_vect44.json";
 var index_res3 = "data/badeindex_vect55.json";
 
+//Index-List
+let indizes = ["index21", "index22", "index23"]
+
 // Temperatur-Index Threshold
 var threshold = 30
 //var threshold = 68;
@@ -230,9 +233,8 @@ var mouseover = function(d) {
             }
             Tooltip.html("<strong>Badeindex: </strong>" + d.properties.DN +"<br>" + "Badewetter: " + yesNo)
         }
-    
     // Fill-Interaction
-    if(featureClass != ("index21" || "index22" || "index23")){
+    if(!indizes.includes(featureClass)){
         var color = d3.select(this).attr("stroke");
         //console.log(color);
         d3.select(this).style("fill", color)
@@ -247,12 +249,13 @@ var mouseleave = function(d) {
     //Tooltip function
     Tooltip.style("opacity", 0)
     
-    if(d3.select(this).attr("class") != ("index21" || "index22" || "index23")){
+    console.log(d3.select(this).attr("class"))
+    
+    if(!indizes.includes(d3.select(this).attr("class"))){
         // Fill-Interaction
         d3.select(this).style("fill", "#3f3d3d")
             .attr("fill-opacity", 0.5);
     }
-    
 }
 
 // Aktivieren einer spezifischen Genauigkeit (Ersatz für update Function)
@@ -296,7 +299,7 @@ d3.select("input#accuracy").on("change", function(d){
 /* ---------------------- Layer Initialization --------------- */
 // Badewetter-Index (displayed) Accuracy 1
 d3.json(index_res1, function(bw){
-    console.log(bw);
+    //console.log(bw);
     
     var in_vals = topojson.feature(bw, bw.objects.badeindex_vect32).features;
                 
@@ -316,7 +319,7 @@ d3.json(index_res1, function(bw){
 
 // Badewetter-Index (displayed) Accuracy 2
 d3.json(index_res2, function(bw){
-    console.log(bw);
+    //console.log(bw);
     
     var in_vals = topojson.feature(bw, bw.objects.badeindex_vect44).features;
                 
@@ -336,7 +339,7 @@ d3.json(index_res2, function(bw){
 
 // Badewetter-Index (displayed) Accuracy 3
 d3.json(index_res3, function(bw){
-    console.log(bw);
+    //console.log(bw);
     
     var in_vals = topojson.feature(bw, bw.objects.badeindex_vect55).features;
                 
@@ -356,7 +359,7 @@ d3.json(index_res3, function(bw){
 
 // Kantone        
 d3.json(kantone, function(data){
-    console.log(data);
+    //console.log(data);
                 
     areas = gKantone.selectAll(".area")
         .data(data.features)
@@ -422,7 +425,7 @@ d3.json(index_res3, function(bw2){
 
 // Seen        
 d3.json(lakes, function(lk){
-    console.log(lk);
+    //console.log(lk);
                 
     var seen = gLakes.selectAll(".lakes")
         .data(lk.features)
@@ -436,7 +439,7 @@ d3.json(lakes, function(lk){
 
 // Hauptorte
 d3.json(hauptorte, function(orte){
-        console.log(orte);
+        //console.log(orte);
         
         var ortePoints = gHauptorte.selectAll(".orte")
             .data(orte.features)
@@ -468,7 +471,7 @@ d3.json(hauptorte, function(orte){
 
 // Flussdaten
 d3.json(riverdata, function(rivertemps){
-        console.log(rivertemps);        
+        //console.log(rivertemps);        
         
         var riverPoints = gRiver.selectAll(".rivers")
             .data(rivertemps.features)
@@ -501,7 +504,7 @@ d3.json(riverdata, function(rivertemps){
 
 // Wetterstationen
 d3.json(weatherdata, function(weather){
-        console.log(weather);
+        //console.log(weather);
         
         var weatherPoints = gWeather.selectAll(".weather")
             .data(weather.features)

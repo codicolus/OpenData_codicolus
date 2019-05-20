@@ -77,32 +77,34 @@
                         Der Index wird aus der gewichteten Summe von 6 Parametern berechnet.<br> Der Index basiert auf dem Ermessen der Autoren. Er dient hauptsächlich dem Zweck der Visualisierung und ist nicht wissenschaftlich abgesichert. <br></p>
 
                         <h2>Einstellungen</h2>
-
-                        <form>
-                            <div class="buffer">
-                                <h6 class="col-lg-12"><strong>Index-Genauigkeit festlegen</strong><br>(1 = hoch &nbsp; 3 = niedrig)</h6>
-                                <input type="range" class="custom-range col-lg-12 col-sm-3" min="1" max="3" step="1" value="1" id="accuracy">
-                                <label for="accuracy" id="lbaccur">Wert: 1</label>
-                            </div>
-                        </form>
-                        <form>
-                            <div class="baden">
-                                <h6 class="col-lg-12"><strong>Bei welcher Lufttemperatur gehts du baden?</strong></h6>
-                                <input type="range" class="custom-range col-lg-12 col-sm-3" min="10" max="45" step="1" value="20" id="parameter">
-                                <label for="parameter" id="lbparam">Wert: 20 °C</label>
-                            </div>
-                        </form>
-                        <form>
-                            <div>
-                                <h6 class="col-lg-12"><strong>Layers aktivieren/deaktivieren</strong></h6>
-                                <!-- Button -->
-                                <div>
-                                  <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label><br>
-                                  <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label><br>
-                                  <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
+                        
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <form>
+                                <div class="buffer">
+                                    <h6 class="col-lg-12"><strong>Index-Genauigkeit festlegen</strong><br>(1 = niedrig &nbsp; 3 = hoch)</h6>
+                                    <input type="range" class="custom-range col-lg-12 col-sm-8" min="1" max="3" step="1" value="1" id="accuracy">
+                                    <label for="accuracy" id="lbaccur">Wert: 1</label>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                            <form>
+                                <div class="baden">
+                                    <h6 class="col-lg-12"><strong>Bei welcher Lufttemperatur gehts du baden?</strong></h6>
+                                    <input type="range" class="custom-range col-lg-12 col-sm-8" min="10" max="45" step="1" value="20" id="parameter">
+                                    <label for="parameter" id="lbparam">Wert: 20 °C</label>
+                                </div>
+                            </form>
+                            <form>
+                                <div>
+                                    <h6 class="col-lg-12"><strong>Layers aktivieren/deaktivieren</strong></h6>
+                                    <!-- Button -->
+                                    <div>
+                                      <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label><br>
+                                      <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label><br>
+                                      <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -110,6 +112,16 @@
                 <div class="row">
                     <div id="metadata" class="col-sm-12 col-md-12 col-lg-6">
                         <h2>Der Badewetter-Index im Detail</h2>
+                        <h6><strong>Berechnung:</strong></h6>
+                        <p>Der Badewetter-Index schliesst die folgenden Parameter mit ein:<br>
+                        <li>Lufttemperatur (°C), Niederschlag (mm), Sonnenscheindauer (min), Globalstrahlung (W/m2), Luftfeuchtigkeit (%) und Windstärke (km/h)</li></p>
+                        <p>Der Badewetter-Index wurde als gewichtete Summe der standardisierten Parameter berechnet. Die Gewichtung der einzelnen Parameter lagen im Ermessen der Autoren und wiederspiegeln nicht zwingend wissenschaftliche Kriterien.<br>Der Index wurde  an jeder Wetterstation mit vollständigen Messdaten berechnet und anschliessend räumlich interpoliert (Inverse Distance Weighting). </p>
+                        
+                        <h6><strong>Interpretation und Kritische Beurteilung:</strong></h6>
+                        <p>Die Autoren des Badewetter-Indexes haben das Augenmerk hauptsächlich auf die Visualisierung gelegt. Die flächenhafte Darstellung durch die simple räumliche Interpolation von Wetterstationsdaten ermöglicht dem Benutzer ein umfassenderes und lokaleres Bild der aktuellen Badewetter-Bedingungen.<br>Sowohl die Berechnung als auch die Interpolationsmethode wurden im Erachten der Autoren sinnvoll gewählt. Die Gewichtung und die Interpolationsparameterwahl unterlag jedoch einer gewissen Willkür.<br>
+                        In diesen Aspekten sehen die Autoren auch das grösste Verbesserungspotenzial. So müsste beispielsweise die Topographie der Schweiz anhand eines Höhenmodells zwingend in die Gewichtung mit einfliessen.<br>
+                        Zudem ist eine Interpolation immer eine Annäherung und der lokal berechnete Badeindex muss nicht immer mit den realen Gegebenheiten übereinstimmen.</p>
+                        
                     </div>
 
                     <div id="user_manual" class="col-sm-12 col-md-12 col-lg-6">
@@ -130,39 +142,47 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <h3>Datengrundlagen</h3>
-                        <p>Als Datengrundlagen für den Badewetter-Index und die Visualisierung dienten die folgenden Datensätze:</p>
-                        
-                        <ol>
-                            <li>Aktuelle Messwerte der Automatischen Wetterstationen von MeteoSchweiz</li>
-                            <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/automatische-wetterstationen-aktuelle-messwerte">OpenData-Portal</a>.</p>
-                            
-                            <li>Die aktuellen Wassertemperaturen (in Temperatur-Klassen) der Flüssen des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
-                            <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse">OpenData-Portal</a>.</p>
-                            
-                            <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BfS).</li>
-                            <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html">Webseite des Bundesamts für Statistik</a>.</p>
-                        </ol>
+                        <div class="datadescription col-sm-12 col-md-12 col-lg-12">
+                            <p>Als Datengrundlagen für den Badewetter-Index und die Visualisierung dienten die folgenden Datensätze:</p>
+
+                            <ol>
+                                <li>Aktuelle Messwerte der Automatischen Wetterstationen von MeteoSchweiz</li>
+                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/automatische-wetterstationen-aktuelle-messwerte">OpenData-Portal</a>.</p>
+
+                                <li>Die aktuellen Wassertemperaturen (in Temperatur-Klassen) der Flüssen des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
+                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse">OpenData-Portal</a>.</p>
+
+                                <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BfS).</li>
+                                <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html">Webseite des Bundesamts für Statistik</a>.</p>
+                            </ol>
+                        </div>
                     </div>
                     
                     <div class="col-sm-12 col-md-12 col-lg-1"></div>
                     
                     <div class="col-sm-12 col-md-12 col-lg-5">
                         <h3>Über die Autoren</h3>
-                        <div class="row">
-                            
-                            <div class="card">
-                                <img class="card-img-right" src="data/authors/BS.jpeg" height=200 width=200/>
-                            </div>
-                            
-                            
-                            <div class="col-sm-6 col-md-6 col-lg-6 author">
-                                <div class="row">
+                        <div class="row col-sm-12 col-md-12 col-lg-12">
+                            <div class="row col-sm-6 col-md-6 col-lg-12 author">
+                                
+                                <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="image-container">
-                                    </div>
-                               </div>
+                                    </div>   
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-8">
+                                    <h6 class="name">Benjamin Schüpbach</h6>
+                                    <p>Benjamin  is an Expert in Applying Deep Neural Networks (DNNs) to Geospatial Data. His interests focus mainly on superbness and banter. <br><a href="#">Contact me for job offers here!</a></p>
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6 author">
-                                <div class="image-container">
+                            <div class="row col-sm-6 col-md-6 col-lg-12 author">
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <div class="image-container">
+                                    </div>   
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-8">
+                                    <h6 class="name">Christoph von Matt</h6>
+                                    <p>Christoph was born as meteorologist and will die as meteorologist. He is also very interested in informatics and fame. <br>
+                                    <a href="#">Contact me for job offers here!</a></p>
                                 </div>
                             </div>
                         </div>

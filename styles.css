@@ -234,6 +234,12 @@ li {
     #authors {
         
     }
+#metadata li {
+    font-size: inherit;
+}
+#metadata p {
+    text-align: justify;
+}
 
 #section3 {
     background-color: khaki;
@@ -248,18 +254,23 @@ li {
     border-radius: 50%;
 }
 
+.datadescription {
+    margin-top: 40px;
+}
+
+.name {
+    margin-top: 10px;
+}
+
 .image-container{
     height: 130px;
     width: 130px;
     border-radius: 50%;
     background-color: gray;
-    background-image: url(data/authors/BS.jpeg)
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 .author {
+    margin: 10px 0px;
     display: flex;
     justify-content: center;
 }
