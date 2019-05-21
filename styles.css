@@ -111,6 +111,8 @@ label {
 
 input[type=checkbox]{
     margin-left: 20px;
+    height: 15px;
+    width: 15px
 }
 
 /* Slider Styling for Mozilla and Chrome */
