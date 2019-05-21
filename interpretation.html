@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <title>Badewetter-Index - Documentation</title>
+        <meta charset="utf-8" name="viewport" content="width-device-width, initial-scale-1">
+        
+        <!-- Bootstrap & jqery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="styles.css">
+        
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        
+    </head>
+    
+    <body>
+        
+        <div class="container-fluid card", id="section2">
+            <div>
+                <h1>DOKUMENTATION ZUM BADEWETTER-INDEX</h1>
+                
+                <div class="page2">
+                    
+                    <div class="button-container col-sm-12 col-md-12 col-lg-12">
+                        <a type="button" class="btn btn-primary" href="index.html" > &#8592; Zurück</a>
+                    </div>
+                    
+                    <h2><strong>INTERPRETATION UND KRITISCHE BEURTEILUNG:</strong></h2>
+                    <p class="p2">Die Autoren des Badewetter-Indexes haben das Augenmerk hauptsächlich auf die Visualisierung gelegt. Die flächenhafte Darstellung durch die simple räumliche Interpolation von Wetterstationsdaten ermöglicht dem Benutzer ein umfassenderes und lokaleres Bild der aktuellen Badewetter-Bedingungen.
+                    Sowohl die Berechnung als auch die Interpolationsmethode wurden im Erachten der Autoren sinnvoll gewählt. Die Gewichtung und die Interpolationsparameterwahl unterlag jedoch einer gewissen Willkür.
+                    In diesen Aspekten sehen die Autoren auch das grösste Verbesserungspotenzial. So müsste beispielsweise die Topographie der Schweiz anhand eines Höhenmodells zwingend in die Gewichtung mit einfliessen, um sich verändernden Bedingungen mit zu- bzw. abnehmender Höhe (m.ü.M) gerecht zu werden.
+                    Zudem ist eine Interpolation immer eine Annäherung an die Wirklichkeit und der lokal berechnete Badeindex muss nicht immer mit den realen Gegebenheiten übereinstimmen.
+                    </p>
+
+                    <h2><strong>DATA-HARVEST UND BERECHNUNG DES BADEINDEX MIT R</strong></h2>
+                    <p class="p2">
+                    Paragraph2 hier he.
+                    </p>
+
+                    <h2><strong>INTERPOLATION MIT QGIS</strong></h2>
+                    <p class="p2">
+                    Paragraph3 hier he.
+                    </p>
+
+                    <h2><strong>UNSERE ERFAHRUNGEN MIT OPEN DATA</strong></h2>
+                    <p class="p2">Open Data umfassen grundsätzlich nicht Peersonen-bezogene und nicht Sicherheits-relevante Daten. 
+                    Des weiteren müssen sie die Prinzipien von Open Data erfüllen (VERWEIS).
+                    Anhand der folgenen Auflistung lässt sich zeigen, wie gut die hier verwendeten Datenquellen diese Anforderungen erfüllen:</p>
+                    
+                    <div class="list-container">
+                        <ul>
+                            <li>
+                            <strong>Vollständigkeit</strong><br>
+                            <em>Alle öffentlichen Daten werden verfügbar gemacht</em><br>
+                            Die verwendeten Wassermessungen zeigen ausschliesslich Messtemperaturen von Fliessgewässern an.
+                            Um Wassertemperaturen von stehenden Gewässern zu erlangen, müsste Webscraping betrieben werden.
+                            </li>
+
+                            <li>
+                            <strong>Primärquelle</strong><br>
+                            <em>Die Daten werden an ihrem Ursprung gesammelt</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Zeitnah</strong><br>
+                            <em>Daten werden umgehend zur Verfügung gestellt</em><br>
+                            Dieses Kriterium wird von den Wettermessdaten von SwissMeteo erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Zugänglichkeit</strong><br>
+                            <em>Daten werden allen für möglichst viele Verwendungszwecke bereit gestellt</em><br>
+                            </li>
+
+                            <li>
+                            <strong>Maschinenlesbarkeit</strong><br>
+                            <em>Daten sind in einem offenen, strukturierten Format gespeichert</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Nicht diskriminierend</strong><br>
+                            <em>Daten sind allen ohne Registrierung verfügbar</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Nicht Proprietär</strong><br>
+                            <em>Zur Dateninterpretation wird keine proprietäre Software benötigt</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Freie Lizenz</strong><br>
+                            <em>Daten stehen unter einer freien Lizenz</em><br>
+                            </li>
+
+                            <li>
+                            <strong>Permanent Verfügbar</strong><br>
+                            <em>Datenbestände sind permanent online und versioniert verfügbar</em><br>
+                            </li>
+
+                            <li>                
+                            <strong>Kostenlos</strong><br>
+                            <em>Der Zugriff auf die Daten ist kostenlos</em><br>
+                            Für alle hier visualisierten Daten ist dieses Kriterum erfüllt.
+                            Um das Gewässernetzwerk der Schweiz ansprechend darzustellen, bedarf es jedoch einem Datensatz mit Flüssen.
+                            Dieser ist vom BAFU nur gegen Bezahlung erhältlich (LINK).
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        
+        </div>
+
+    </body>
+    
+</html>
