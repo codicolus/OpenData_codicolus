@@ -21,8 +21,14 @@
         font-size: 1.3vw;
     }
     
-    li {
+    #section2 li {
         font-size: 1.1vw;
+        font-family: "Open Sans", sans-serif;
+    }
+    
+    #section3 li {
+        font-size: 1vw;
+        font-family: "Open Sans", sans-serif;
     }
     
     #metadata li {

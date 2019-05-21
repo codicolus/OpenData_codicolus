@@ -1,0 +1,11 @@
+{
+"title": "Badewetter-Index Schweiz",
+"description": "Für den Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) sowie vom Bundesamt für Statistik (BFS) verwendet. Der Index wird aus einer gewichteten Summe von 6 Parametern berechnet. Er Index basiert auf dem Ermessen der Autoren. Der Index dient hauptsächlich dem Zweck der Visualisierung und ist nicht wissenschaftlich abgesichert.",
+"authors": [
+    {"name": "Benjamin Schuepbach", "email": "benjamin.schuepbach@students.unibe.ch"},
+    {"name": "Christoph von Matt", "email": "christoph.vonmatt@students.unibe.ch"}
+],
+"date": "2019-05-21",
+"category": "environment",
+"software_license": "CC BY-SA 4.0"
+}
