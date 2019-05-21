@@ -113,10 +113,14 @@ p {
 #section1 {
  background-color: inherit;
 }
-
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
     #map {
-        
     }
+
 
         .kantone{
             fill: #CB904D;
