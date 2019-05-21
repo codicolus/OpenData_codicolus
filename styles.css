@@ -41,6 +41,14 @@
         display: flex;
         justify-content: center;
     }
+    
+    .page2 {
+        margin: 0 auto;
+    }
+    
+    .list-container {
+        margin: 0px;
+    }
 }
 
 body {

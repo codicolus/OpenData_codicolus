@@ -74,7 +74,7 @@
                     <div id="sidebar" class="col-sm-12 col-md-12 col-lg-3">
                         <h2>BESCHREIBUNG</h2>
 
-                        <p class="description">Mit dem Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) sowie vom Bundesamt für Statistik (BfS) verwendet.<br>
+                        <p class="description">Mit dem Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) sowie vom Bundesamt für Statistik (BFS) verwendet.<br>
                         Der Index wird aus der gewichteten Summe von 6 Parametern berechnet.<br> Der Index basiert auf dem Ermessen der Autoren. Er dient hauptsächlich dem Zweck der Visualisierung und ist nicht wissenschaftlich abgesichert. <br></p>
 
                         <h2>EINSTELLUNGEN</h2>
@@ -133,7 +133,7 @@
                         <p>Auf den Standardeinstellungen (Lufttemperatur 20°C) gilt ein Index-Wert von 68 als Badewetter.</p>
                         
                         <div class="button-container col-sm-12 col-md-12 col-lg-12">
-                            <a type="button" class="btn btn-primary" href="interpretation.html" >Ausführliche Interpretation</a>
+                            <a type="button" class="btn btn-primary" onclick="onclickInterpretation()" >Ausführliche Interpretation</a>
                         </div>   
                     </div>
 
@@ -165,7 +165,7 @@
                                 <li>Die aktuellen Wassertemperaturen (in Temperatur-Klassen) der Flüsse des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
                                 <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse" target="_blank">OpenData-Portal</a>.</p>
 
-                                <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BfS).</li>
+                                <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BFS).</li>
                                 <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html" target="_blank">Webseite des Bundesamts für Statistik</a>.</p>
                             </ol>
                         </div>
@@ -207,7 +207,6 @@
             <div class="impressum col-sm-12 col-md-12 col-lg-12">
                 <p><strong>Impressum</strong> <br>
                 This work is licenced under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA</a>.<br>Zuletzt aktualisiert am: 21.05.2019, 13:20</p>
-                
             </div>
         </div>
         
@@ -215,6 +214,124 @@
         
         <!-- Script for Visualization-App -->
         <script src="visualization.js"></script>
+        
+        <div class="container-fluid card interpretation", id="section2" style="display: none">
+            <div>
+                <h1>DOKUMENTATION ZUM BADEWETTER-INDEX</h1>
+                
+                <div class="page2">
+                    
+                    <div class="button-container col-sm-12 col-md-12 col-lg-12">
+                        <a type="button" class="btn btn-primary" onclick="onclickGoBack()"> &#8592; Zurück</a>
+                    </div>
+                    
+                    <h2><strong>INTERPRETATION UND KRITISCHE BEURTEILUNG:</strong></h2>
+                    <p class="p2">Die Autoren des Badewetter-Indexes haben das Augenmerk hauptsächlich auf die Visualisierung gelegt. Die flächenhafte Darstellung durch die simple räumliche Interpolation von Wetterstationsdaten ermöglicht dem Benutzer ein umfassenderes und lokaleres Bild der aktuellen Badewetter-Bedingungen.
+                    Sowohl die Berechnung als auch die Interpolationsmethode wurden im Erachten der Autoren sinnvoll gewählt. Die Gewichtung und die Interpolationsparameterwahl unterlag jedoch einer gewissen Willkür.
+                    In diesen Aspekten sehen die Autoren auch das grösste Verbesserungspotenzial. So müsste beispielsweise die Topographie der Schweiz anhand eines Höhenmodells zwingend in die Gewichtung mit einfliessen, um sich verändernden Bedingungen mit zu- bzw. abnehmender Höhe (m.ü.M) gerecht zu werden.
+                    Zudem ist eine Interpolation immer eine Annäherung an die Wirklichkeit und der lokal berechnete Badeindex muss nicht immer mit den realen Gegebenheiten übereinstimmen.
+                    </p>
+
+                    <h2><strong>DATA-HARVEST UND BERECHNUNG DES BADEINDEX MIT R</strong></h2>
+                    <p class="p2">
+                    Paragraph2 hier he.
+                    </p>
+
+                    <h2><strong>INTERPOLATION MIT QGIS</strong></h2>
+                    <p class="p2">
+                    Paragraph3 hier he.
+                    </p>
+
+                    <h2><strong>UNSERE ERFAHRUNGEN MIT OPEN DATA</strong></h2>
+                    <p class="p2">Open Data umfassen grundsätzlich nicht Peersonen-bezogene und nicht Sicherheits-relevante Daten. 
+                    Des weiteren müssen sie die Prinzipien von Open Data erfüllen (VERWEIS).
+                    Anhand der folgenen Auflistung lässt sich zeigen, wie gut die hier verwendeten Datenquellen diese Anforderungen erfüllen:</p>
+                    
+                    <div class="list-container">
+                        <ul>
+                            <li>
+                            <strong>Vollständigkeit</strong><br>
+                            <em>Alle öffentlichen Daten werden verfügbar gemacht</em><br>
+                            Die verwendeten Wassermessungen zeigen ausschliesslich Messtemperaturen von Fliessgewässern an.
+                            Um Wassertemperaturen von stehenden Gewässern zu erlangen, müsste Webscraping betrieben werden.
+                            </li>
+
+                            <li>
+                            <strong>Primärquelle</strong><br>
+                            <em>Die Daten werden an ihrem Ursprung gesammelt</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Zeitnah</strong><br>
+                            <em>Daten werden umgehend zur Verfügung gestellt</em><br>
+                            Dieses Kriterium wird von den Wettermessdaten von SwissMeteo erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Zugänglichkeit</strong><br>
+                            <em>Daten werden allen für möglichst viele Verwendungszwecke bereit gestellt</em><br>
+                            </li>
+
+                            <li>
+                            <strong>Maschinenlesbarkeit</strong><br>
+                            <em>Daten sind in einem offenen, strukturierten Format gespeichert</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Nicht diskriminierend</strong><br>
+                            <em>Daten sind allen ohne Registrierung verfügbar</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Nicht Proprietär</strong><br>
+                            <em>Zur Dateninterpretation wird keine proprietäre Software benötigt</em><br>
+                            Erfüllt.
+                            </li>
+
+                            <li>
+                            <strong>Freie Lizenz</strong><br>
+                            <em>Daten stehen unter einer freien Lizenz</em><br>
+                            </li>
+
+                            <li>
+                            <strong>Permanent Verfügbar</strong><br>
+                            <em>Datenbestände sind permanent online und versioniert verfügbar</em><br>
+                            </li>
+
+                            <li>                
+                            <strong>Kostenlos</strong><br>
+                            <em>Der Zugriff auf die Daten ist kostenlos</em><br>
+                            Für alle hier visualisierten Daten ist dieses Kriterum erfüllt.
+                            Um das Gewässernetzwerk der Schweiz ansprechend darzustellen, bedarf es jedoch einem Datensatz mit Flüssen.
+                            Dieser ist vom BAFU nur gegen Bezahlung erhältlich (LINK).
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                    <div class="button-container col-sm-12 col-md-12 col-lg-12">
+                        <a type="button" class="btn btn-primary" onclick="onclickGoBack()"> &#8592; Zurück</a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        
+        </div>
+        
+        <script type=text/javascript>
+            function onclickInterpretation(){
+                $(".page").css("display", "none");
+                $(".interpretation").css("display", "block");
+            }
+            function onclickGoBack(){
+                $(".interpretation").css("display", "none");
+                $(".page").css("display", "block");
+            }
+        </script>
         
     </body>
 </html>
