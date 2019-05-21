@@ -129,10 +129,10 @@ function updateIndexThreshold(temperatur){
                 sunCont(5, 0.05, 10) + globCont(500, 0.05, 1000) +
                 feuCont(70, 0.15) + windCont(0, 0.15, 25);
     
-    var index = Math.ceil(0.4 * temperatur + 22);
+    //var index = Math.ceil(0.4 * temperatur + 22);
     
-    //threshold = Math.floor(100*index);
-    threshold = Math.floor(index);
+    threshold = Math.floor(100*index);
+    //threshold = Math.floor(index);
     
     
     

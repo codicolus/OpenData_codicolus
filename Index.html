@@ -98,10 +98,23 @@
                                 <div>
                                     <h6 class="col-lg-12"><strong>Layers aktivieren/deaktivieren</strong></h6>
                                     <!-- Button -->
-                                    <div>
-                                      <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label><br>
-                                      <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label><br>
-                                      <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
+                                    <div class="col-auto my-1">
+                                          <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input places" id="places" checked>
+                                            <label class="places custom-control-label" for="places">Hauptorte</label>
+                                          </div>
+                                    </div>
+                                    <div class="col-auto my-2">
+                                          <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input meteo" id="meteo" checked>
+                                            <label class="meteo custom-control-label" for="meteo">Wetterstationen</label>
+                                          </div>
+                                    </div>
+                                    <div class="col-auto my-2">
+                                          <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input river" id="river" checked>
+                                            <label class="river custom-control-label" for="river">Flusstemperaturen</label>
+                                          </div>
                                     </div>
                                 </div>
                             </form>
@@ -193,7 +206,8 @@
             </div>
             <div class="impressum col-sm-12 col-md-12 col-lg-12">
                 <p><strong>Impressum</strong> <br>
-                This work is licenced under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA</a>.</p>
+                This work is licenced under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA</a>.<br>Zuletzt aktualisiert am: 21.05.2019, 13:20</p>
+                
             </div>
         </div>
         

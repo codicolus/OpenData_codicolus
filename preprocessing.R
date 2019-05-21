@@ -248,7 +248,7 @@ file <- "http://data.geo.admin.ch/ch.bafu.hydroweb-messstationen_temperatur/ch.b
 data <- readLines(file)
 
 # write JSON
-write(data, file="riverdata.json")
+write(data, file="flussdaten.json")
 
 
 rm(list=ls())
