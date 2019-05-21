@@ -3,7 +3,7 @@
 <html lang="en">
     
     <head>
-        <title>Badewetter.com</title>
+        <title>Badewetter-Index CH - Home</title>
         <meta charset="utf-8" name="viewport" content="width-device-width initial-scale-1"/>
         
         
@@ -64,19 +64,19 @@
             <div id="section1" class="card">
                 <div class="row">
                     <div id="sitename" class="col-sm-12 col-md-12 col-lg-9">
-                        <h1>Badewetter-Index Schweiz</h1>
+                        <h1>BADEWETTER-INDEX SCHWEIZ</h1>
                     </div>
                 </div>
                 <div class="row">
                     <div id="map" class="col-sm-12 col-md-12 col-lg-9">
                     </div>
                     <div id="sidebar" class="col-sm-12 col-md-12 col-lg-3">
-                        <h2>Beschreibung</h2>
+                        <h2>BESCHREIBUNG</h2>
 
                         <p class="description">Mit dem Badeindex werden 10-minütige Wetterstationsdaten von MeteoSchweiz und diverse Geodaten vom Bundesamt für Umwelt (BAFU) sowie vom Bundesamt für Statistik (BfS) verwendet.<br>
                         Der Index wird aus der gewichteten Summe von 6 Parametern berechnet.<br> Der Index basiert auf dem Ermessen der Autoren. Er dient hauptsächlich dem Zweck der Visualisierung und ist nicht wissenschaftlich abgesichert. <br></p>
 
-                        <h2>Einstellungen</h2>
+                        <h2>EINSTELLUNGEN</h2>
                         
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <form>
@@ -98,7 +98,7 @@
                                     <h6 class="col-lg-12"><strong>Layers aktivieren/deaktivieren</strong></h6>
                                     <!-- Button -->
                                     <div>
-                                      <input type="checkbox" id="places" value="orte" checked><label>Hauptorte</label><br>
+                                      <input type="checkbox" id="places" value="orte" checked data-toggle="toggle"><label>Hauptorte</label><br>
                                       <input type="checkbox" id="meteo" value="weather" checked><label>Wetterstationen</label><br>
                                       <input type="checkbox" id="river" value="rivers" checked><label>Flusstemperaturen</label>
                                     </div>
@@ -111,21 +111,20 @@
             <div id="section2" class="container-fluid">
                 <div class="row">
                     <div id="metadata" class="col-sm-12 col-md-12 col-lg-6">
-                        <h2>Der Badewetter-Index im Detail</h2>
+                        <h2>DER BADEWETTER-INDEX IM DETAIL</h2>
                         <h6><strong>Berechnung:</strong></h6>
                         <p>Der Badewetter-Index schliesst die folgenden Parameter mit ein:<br>
                         <li>Lufttemperatur (°C), Niederschlag (mm), Sonnenscheindauer (min), Globalstrahlung (W/m2), Luftfeuchtigkeit (%) und Windstärke (km/h)</li></p>
                         <p>Der Badewetter-Index wurde als gewichtete Summe der standardisierten Parameter berechnet. Die Gewichtung der einzelnen Parameter lagen im Ermessen der Autoren und wiederspiegeln nicht zwingend wissenschaftliche Kriterien.<br>Der Index wurde  an jeder Wetterstation mit vollständigen Messdaten berechnet und anschliessend räumlich interpoliert (Inverse Distance Weighting). </p>
+                        <p>Auf den Standardeinstellungen (Lufttemperatur 20°C) gilt ein Index-Wert von 68 als Badewetter.</p>
                         
-                        <h6><strong>Interpretation und Kritische Beurteilung:</strong></h6>
-                        <p>Die Autoren des Badewetter-Indexes haben das Augenmerk hauptsächlich auf die Visualisierung gelegt. Die flächenhafte Darstellung durch die simple räumliche Interpolation von Wetterstationsdaten ermöglicht dem Benutzer ein umfassenderes und lokaleres Bild der aktuellen Badewetter-Bedingungen.<br>Sowohl die Berechnung als auch die Interpolationsmethode wurden im Erachten der Autoren sinnvoll gewählt. Die Gewichtung und die Interpolationsparameterwahl unterlag jedoch einer gewissen Willkür.<br>
-                        In diesen Aspekten sehen die Autoren auch das grösste Verbesserungspotenzial. So müsste beispielsweise die Topographie der Schweiz anhand eines Höhenmodells zwingend in die Gewichtung mit einfliessen.<br>
-                        Zudem ist eine Interpolation immer eine Annäherung an die Wirklichkeit und der lokal berechnete Badeindex muss nicht immer mit den realen Gegebenheiten übereinstimmen.</p>
-                        
+                        <div class="button-container col-sm-12 col-md-12 col-lg-12">
+                            <button type="button" class="btn btn-primary" >Ausführliche Interpretation</button>
+                        </div>   
                     </div>
 
                     <div id="user_manual" class="col-sm-12 col-md-12 col-lg-6">
-                        <h2>Bedienungshilfe</h2>
+                        <h2>BEDIENUNGSHILFE</h2>
                         <h6><strong>Die Webseite enthält einige interaktive Features:</strong></h6>
                         <ul>
                             <li>Die angezeigten Punktdaten können per Checkbox ein- und ausgeschaltet werden.</li>
@@ -141,19 +140,19 @@
             <div id="section3" class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-6">
-                        <h3>Datengrundlagen</h3>
+                        <h3>DATENGRUNDLAGEN</h3>
                         <div class="datadescription col-sm-12 col-md-12 col-lg-12">
                             <p>Als Datengrundlagen für den Badewetter-Index und die Visualisierung dienten die folgenden Datensätze:</p>
 
                             <ol>
                                 <li>Aktuelle Messwerte der Automatischen Wetterstationen von MeteoSchweiz</li>
-                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/automatische-wetterstationen-aktuelle-messwerte">OpenData-Portal</a>.</p>
+                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/automatische-wetterstationen-aktuelle-messwerte" target="_blank">OpenData-Portal</a>.</p>
 
                                 <li>Die aktuellen Wassertemperaturen (in Temperatur-Klassen) der Flüsse des Flussmessnetz des Bundesamt für Umwelt (BAFU).</li>
-                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse">OpenData-Portal</a>.</p>
+                                <p>Die Daten sind erhältlich auf dem <a href="https://opendata.swiss/de/dataset/wassertemperatur-der-flusse" target="_blank">OpenData-Portal</a>.</p>
 
                                 <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BfS).</li>
-                                <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html">Webseite des Bundesamts für Statistik</a>.</p>
+                                <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html" target="_blank">Webseite des Bundesamts für Statistik</a>.</p>
                             </ol>
                         </div>
                     </div>
@@ -161,18 +160,18 @@
                     <div class="col-sm-12 col-md-12 col-lg-1"></div>
                     
                     <div class="col-sm-12 col-md-12 col-lg-5">
-                        <h3>Über die Autoren</h3>
+                        <h3>ÜBER DIE AUTOREN</h3>
                         <div class="row col-sm-12 col-md-12 col-lg-12">
                             <div class="row col-sm-6 col-md-6 col-lg-12 author">
                                 
                                 <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="image-container">
-                                        <img src="data/authors/beni.png" width=130 height=130 alt="Nothing to see here!"/>
+                                        <img src="data/authors/turban.png" width=130 height=130 alt="Nothing to see here!"/>
                                     </div>   
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-8">
                                     <h6 class="name">Benjamin Schüpbach</h6>
-                                    <p>Benjamin  is an expert in applying Deep Neural Networks (DNNs) to Geospatial Data. His interests focus mainly on superbness and banter. <br><a href="#">Contact me for job offers here!</a></p>
+                                    <p>Benjamin is applying Deep Neural Networks to Geospatial Data. His other interests mainly consist of Handball and quality banter. He has been to India once. <br><a href="mailto:benjamin.schuepbach@students.unibe.ch">Contact me here!</a></p>
                                 </div>
                             </div>
                             <div class="row col-sm-6 col-md-6 col-lg-12 author">
@@ -184,14 +183,19 @@
                                 <div class="col-sm-12 col-md-12 col-lg-8">
                                     <h6 class="name">Christoph von Matt</h6>
                                     <p>Christoph was born a meteorologist and will die as one. He is also very interested in informatics and geospatial data. <br>
-                                    <a href="#">Contact me for job offers here!</a></p>
+                                    <a href="mailto:christoph.vonmatt@students.unibe.ch">Contact me here!</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="impressum col-sm-12 col-md-12 col-lg-12">
+                <p><strong>Impressum</strong> <br>
+                This work is licenced under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA</a>.</p>
+            </div>
         </div>
+        
         
         
         <!-- Script for Visualization-App -->

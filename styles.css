@@ -1,6 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 1920px){
+    body {
+        font-size: 1vw;
+    }
+    
+    .loadingFrame .loading h1 {
+        font-size: 7vw;
+    }
+    
+    h1 {
+        font-size: 4vw;
+    }
+    
+    h6 {
+        font-size: 1.3vw;
+    }
+    
+    li {
+        font-size: 1.1vw;
+    }
+    
+    #metadata li {
+        font-size: 1.1vw;
+    }
+    
+    #metadata p {
+        font-size: 1.1vw;
+    }
+    
+}
+// Mobile styles
+@media only screen and (max-width: 660px){
+    .author {
+        margin: 40px 0px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
 body {
     background: #3f3d3d;
-    font-size: 1vw;
 }
 
 .loadingFrame {
@@ -16,21 +60,19 @@ body {
 }
 
 .loadingFrame .loading h1{
-    //font-size: 100px;
-    font-size: 7vw;
+    font-size: 100px;
     font-weight: bold;
     text-align: center;
 }
 
 .card {
-    background: slategrey;
+    background: #3f3d3d;
 }
 
 h1 {
     color: turquoise;
     text-align: center;
-    //font-size: 50px;
-    font-size: 4vw;
+    font-size: 50px;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
@@ -61,8 +103,7 @@ h3 {
 
 h6 {
     margin-bottom: 20px;
-    //font-size: 18px;
-    font-size: 1.3vw;
+    font-size: 20px;
 }
 
 p {
@@ -233,8 +274,7 @@ input[type=range]::-ms-thumb {
 
 li {
     margin-bottom: 5px;
-    //font-size: 17px;
-    font-size: 1.1vw;
+    font-size: 17px;
 }
 
     #metadata {
@@ -244,16 +284,34 @@ li {
     #authors {
         
     }
-#metadata li {
-    font-size: 1.1vw;
-}
+
 #metadata p {
     text-align: justify;
-    font-size: 1.1vw;
+}
+
+.button-container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #3f3d3d;
+    color: whitesmoke;
+    border-width: 2px;
+    border-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: turquoise;
+    color: #3f3d3d;
+    border-color: inherit;
 }
 
 #section3 {
     background-color: khaki;
+    color: #3f3d3d;
     
 }
 
@@ -284,4 +342,14 @@ li {
     margin: 10px 0px;
     display: flex;
     justify-content: center;
+}
+
+.impressum {
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.impressum p {
+    text-align: center;
 }
