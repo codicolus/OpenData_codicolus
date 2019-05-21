@@ -168,7 +168,7 @@
                                 <li>Kartographische Basisgeometrien für statistische Raumgliederungen des Bundesamts für Statistik (BFS).</li>
                                 <p>Die Daten sind erhältlich auf der <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html" target="_blank">Webseite des Bundesamts für Statistik</a>.</p>
                                 
-                                <li>Icons für die Slider von <a href="https://www.freepik.com/?__hstc=57440181.aea39316c8b909eb3fdaee2183da7262.1558005378078.1558014245745.1558430293766.4&__hssc=57440181.4.1558430293766&__hsfp=2129184312">Freepick</a> und <a href="https://www.flaticon.com/authors/monkik">Flaticon</a>.</li>
+                                <li>Icons für die Slider von <a href="https://www.freepik.com/?__hstc=57440181.aea39316c8b909eb3fdaee2183da7262.1558005378078.1558014245745.1558430293766.4&__hssc=57440181.4.1558430293766&__hsfp=2129184312" target="_blank">Freepick</a> und <a href="https://www.flaticon.com/authors/monkik" target="_blank">Flaticon</a>.</li>
                             </ol>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                                 <div class="col-sm-12 col-md-12 col-lg-8">
                                     <h6 class="name">Benjamin Schüpbach</h6>
                                     <p>Benjamin is applying Deep Neural Networks to geospatial data. His other interests mainly consist of handball and quality banter. He has been to India once.</p>
-                                    <p>Coding Languages: mainly Python. <br><a href="mailto:benjamin.schuepbach@students.unibe.ch">Contact me here!</a></p>
+                                    <p>Coding Languages: mainly Python. <br><a href="mailto:benjamin.schuepbach@students.unibe.ch">Contact me here!</a><br><a href="https://github.com/taetscher" target="_blank">Follow me on GitHub!</a></p>
                                 </div>
                             </div>
                             <div class="row col-sm-6 col-md-6 col-lg-12 author">
@@ -200,8 +200,8 @@
                                 <div class="col-sm-12 col-md-12 col-lg-8">
                                     <h6 class="name">Christoph von Matt</h6>
                                     <p>Christoph is a geographer with a focus on meteorology and modeling. His other interests consist of table tennis and he has not been to India yet.</p>
-                                    <p>Coding Languages: mainly Python & R.
-                                    <a href="mailto:christoph.vonmatt@students.unibe.ch">Contact me here!</a></p>
+                                    <p>Coding Languages: mainly Python & R.<br>
+                                    <a href="mailto:christoph.vonmatt@students.unibe.ch">Contact me here!</a><br><a href="https://github.com/codicolus" target="_blank">Follow me on GitHub!</a></p>
                                 </div>
                             </div>
                         </div>
@@ -238,17 +238,43 @@
 
                     <h2><strong>DATA-HARVEST UND BERECHNUNG DES BADEINDEX MIT R</strong></h2>
                     <p class="p2">
-                    Paragraph2 hier he.
+                    Für die Visualisierung des Badewetter-Indexes werden einerseits prinzipiell unveränderliche Daten (Basisgeometrien der Schweiz) sowie veränderliche Daten (aktuelle Messwerte der automatischen Wetterstationen, Flusstemperaturen) verwendet. Damit die veränderlichen Daten möglichst einfach aktualisiert werden können wurde ein R-Skript erstellt, welches sowohl die Wetterstationsdaten von MeteoSchweiz als auch die Flusstemperaturen des Bundesamts für Umwelt (BAFU) direkt per URL liest. Nach anschliessender Bereinigung und Prozessierung der Datensätze werden diese in lokalen Files abgespeichert bzw. werden diese überschrieben.
                     </p>
+                    <p class="p2">
+                        <strong>Die Prozessierung der Daten enthält folgende Schritte:</strong>
+                    </p>
+                        <ol class="procedure">
+                            <li>Anpassung der Spaltennamen</li>
+                            <p>Die Spalten der Originaldaten enthielten in vielen Fällen codierte bzw. abgekürzte Spaltennamen. Diese werden im Skript automatisch angepasst.</p>
+                            
+                            <li>Aufsplitten der Koordinaten in Lon/Lat-Werte</li>
+                            <p>Die Koordinaten in den Metadaten der automatischen Wetterstationen waren im Format "600000/200000" und mussten entsprechend separiert werden.</p>
+                            
+                            <li>Joinen der aufbereiteten Metadaten mit den Messwerten (Join by StationID).</li>
+                            <p>Nach dem Aufbereiten der Metadaten werden diese mit den Messwerten zu einer einzigen Tabelle zusammengefügt.</p>
+                            
+                            <li>Berechnung des Badewetter-Indexes</li>
+                            <p>Anschliessend erfolgt die Berechnung des Badewetter-Indexes. Dieser schliesst die Parameter Temperatur (°C), Niederschlag (mm), Sonnenscheindauer (min), Globalstrahlung (W/m2), Luftfeuchtigkeit (%) und Windstärke (km/h) ein.<br>Die Berechnung des Index erfolgt mithilfe von Helferfunktionen welche (meistens) einen aktuellen Messwert, eine Gewichtung und ein (sinnvoll gewählter) parameterspezifischen Maximalwert für die Schweiz. Die aktuellen Messwerte werden anschliessend standardisiert und mit der Gewichtung verrechnet. Der Index ist die Summe der einzelnen Parameter-Gewichtungs-Produkten.</p>
+                            
+                            <li>Speicherung der Files</li>
+                            <p>Das R-Skript speichert insgesamt 3 Files: 2 Files für den Badewetter-Index (.csv & .csvt). Das csvt-File spezifiziert den Datentyp der jeweiligen Spalte im CSV-File (e.g. String, Real, ...). Dieses ist notwendig, damit die Spalten korrekt ins Quantum GIS eingelesen werden können (siehe nächster Abschnitt).<br>
+                            In diesem Schritt wird auch das aktuelle JSON-File mit den Flusstemperatur-Klassen per URL eingelesen und lokal als JSON gespeichert.</p>
+                        </ol>
+                    
 
                     <h2><strong>INTERPOLATION MIT QGIS</strong></h2>
                     <p class="p2">
-                    Paragraph3 hier he.
+                        Um den Badewetter-Index flächendeckend für die Schweiz darstellen zu können wurden die vorhandenen Punktdaten (Automatische Wetterstationen) mithilfe von Quantum GIS 2.18 "Las Palmas" interpoliert. Verwendet wurde ein simpler "Inverse Distance Weighting"-Algoritmus (IDW). Als Interpolationsvariable wurde der zuvor berechnete Badewetter-Index verwendet. Für die in der Visualisierung möglichen Genauigkeitseinstellungen wurden 3 Rasterinterpolationen durchgeführt. Durch die Variierung der Potenz innerhalb des IDW-Algorithmus wurde die Distanz zu den Stationen jeweils unterschiedlich stark gewichtet. Weiter Informationen zu IDW finden Sie <a href="https://de.wikipedia.org/wiki/Inverse_Distanzwichtung" target="_blank">hier</a>.
+                        <br>
+                        Die Raster wurden anschliessend mit dem Shapefile der Schweizer-Landesgrenze zugeschnitten, vektorisiert und schliesslich als GeoJSON im WGS84 exportiert.
+                        Mit Hilfe des <a href="https://mapshaper.org/" target="_blank">MapShaper</a> in ein TopoJSON konvertiert.
                     </p>
+                    
+                    <p class="p2">Alle Koordinaten der verwendeten Daten waren auf das Schweizer Koordinatensystem angepasst (CH1903/LV03 oder CH1903+/LV95). Beim Export ins GeoJSON-Format wurden diese entsprechend ins D3-kompatible WGS84 reprojiziert.</p>
 
                     <h2><strong>UNSERE ERFAHRUNGEN MIT OPEN DATA</strong></h2>
                     <p class="p2">Open Data umfassen grundsätzlich nicht personenbezogene und nicht sicherheitsrelevante Daten. 
-                    Des weiteren müssen sie die <a href="https://sunlightfoundation.com/policy/documents/ten-open-data-principles/">Prinzipien von Open Data</a> erfüllen.
+                    Des weiteren müssen sie die <a href="https://sunlightfoundation.com/policy/documents/ten-open-data-principles/" target="_blank">Prinzipien von Open Data</a> erfüllen.
                     Anhand der folgenen Auflistung lässt sich zeigen, wie gut die hier verwendeten Datenquellen diese Anforderungen erfüllen:</p>
                     
                     <div class="list-container">

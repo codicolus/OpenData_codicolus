@@ -67,6 +67,11 @@ body {
     margin-right: 20%;
 }
 
+.procedure li {
+    margin-left: 18px;
+    font-weight: bold;
+}
+
 .list-container {
     margin-left: 28%;
     margin-right: 25%;
@@ -365,6 +370,7 @@ li {
 }
 
 .image-container{
+    margin-top: 15px;
     height: 130px;
     width: 130px;
     border-radius: 50%;
