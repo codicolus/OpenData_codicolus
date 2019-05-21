@@ -211,8 +211,21 @@ var mouseover = function(d) {
         // if mouse hovers over wetter, read in metadata from weather
         if ( featureClass == "weather"){
             numstring = d.properties.Time.toString();
+            var temp = d.properties["Temperatur (°C)"];
+            var feucht = d.properties["Luftfeuchtigkeit (%)"];
+            var precip = d.properties["Niederschlag (mm)"];
             
-            Tooltip.html("<strong>"+d.properties.Name+"</strong>" + " (" + d.properties.Station + ")" + "<br>" + "Höhe (m.ü.M): " + d.properties.Höhe + "<br>" + "Lufttemperatur (°C): " + d.properties["Temperatur (°C)"] + "<br>" + "Luftfeuchtigkeit (%): " + d.properties["Luftfeuchtigkeit (%)"] + "<br>" + "Niederschlag (mm): " + d.properties["Niederschlag (mm)"] + "<br>" + "" + "<br>" +
+            if (temp == null){
+                temp = "n.v.";
+            }
+            if (feucht == null){
+                feucht = "n.v.";
+            }
+            if (precip == null){
+                precip = "n.v.";
+            }
+            
+            Tooltip.html("<strong>"+d.properties.Name+"</strong>" + " (" + d.properties.Station + ")" + "<br>" + "Höhe (m.ü.M): " + d.properties.Höhe + "<br>" + "Lufttemperatur (°C): " + temp + "<br>" + "Luftfeuchtigkeit (%): " + feucht + "<br>" + "Niederschlag (mm): " + precip + "<br>" + "" + "<br>" +
                         numstring.substring(6,8) + "." + numstring.substring(4,6) +
                         "." + numstring.substring(0,4) +
                         " " + numstring.substring(8,10) + ":" +
