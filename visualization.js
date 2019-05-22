@@ -201,7 +201,7 @@ var mouseover = function(d) {
   Tooltip.style("border-color", d3.select(this).attr("stroke"))
         //.attr("display", "inline")
         .style("left", (d3.event.pageX + 10) + "px")
-        .style("top", (d3.event.pageY - 40) + "px")
+        .style("top", (d3.event.pageY - 100) + "px")
         
       /*.style("left", (d3.mouse(this)[0]) + "px")
         .style("top", (d3.mouse(this)[1]) + "px");*/
