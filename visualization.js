@@ -1,3 +1,16 @@
+/* This stylesheet was created within the Open Data Lecture 2019 at the Institute for digital sustainability (Digitale Nachhaltigkeit)
+	at the University of Bern.
+	
+	The authors of this stylesheet are:
+	-Benjamin Schüpbach
+	-Christoph von Matt
+	
+	Last update: 24.05.2019
+	
+	Licence: CC-BY-SA
+	https://creativecommons.org/licenses/by-sa/4.0/
+
+*/
 /* ---------------------- Settings ------------------------ */
 // Set up canvas and Layer-Groups
 var canvas = d3.select("#map")
